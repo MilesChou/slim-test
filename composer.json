@@ -10,6 +10,22 @@
         "squizlabs/php_codesniffer": "^2.5",
         "phpunit/phpunit": "^4.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Miles\\Slim\\Test\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Miles\\Slim\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": [
+            "php vendor/bin/phpcs",
+            "php vendor/bin/phpunit"
+        ]
+    },
     "license": "MIT License",
     "authors": [
         {
