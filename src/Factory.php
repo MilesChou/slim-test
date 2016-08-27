@@ -30,7 +30,7 @@ class Factory
     /**
      * Init builder
      *
-     * @param Callable
+     * @param Closure
      */
     public static function init(callable $builder)
     {
