@@ -2,7 +2,7 @@
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Miles\Slim\Test\Factory as Factory;
+use Framins\Slim\Test\Factory as Factory;
 
 // Set timezone
 date_default_timezone_set('Asia/Taipei');

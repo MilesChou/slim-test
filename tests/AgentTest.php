@@ -1,10 +1,10 @@
 <?php
 /**
- * @link      https://github.com/MilesChou/slim-test
- * @copyright Copyright (c) 2016 Miles Chou
- * @license   https://github.com/MilesChou/slim-test/blob/master/LICENSE (MIT License)
+ * @link      https://github.com/Framins/slim-test
+ * @copyright Copyright (c) 2016 Framins
+ * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
  */
-namespace Miles\Slim\Test;
+namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
 

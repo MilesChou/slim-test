@@ -1,5 +1,5 @@
 {
-    "name": "miles/slim-test",
+    "name": "framins/slim-test",
     "description": "Slim Testing helper",
     "type": "library",
     "require": {
@@ -12,12 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Miles\\Slim\\Test\\": "src"
+            "Framins\\Slim\\Test\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Miles\\Slim\\Test\\": "tests"
+            "Framins\\Slim\\Test\\": "tests"
         }
     },
     "scripts": {
