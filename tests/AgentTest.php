@@ -17,7 +17,9 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
-        $this->target = new Agent();
+        $app = getApp();
+
+        $this->target = new Agent($app);
     }
 
     public function tearDown()
@@ -25,8 +27,14 @@ class AgentTest extends TestCase
         $this->target = null;
     }
 
-    public function testFooBar()
+    public function testItShouldReturnTrueWhenVisitWillReturnOKAndCallFunctionIsOk()
     {
-        $this->assertTrue(true);
+        // Arrange
+        $url = '/will/return/ok';
+
+        // Act
+        $actual = $this->target->get('/will/return/ok')->isOk();
+
+        $this->assertTrue($actual);
     }
 }
