@@ -21,6 +21,11 @@ class Agent
     protected $container;
 
     /**
+     * @var \Slim\Http\Response
+     */
+    protected $response;
+
+    /**
      * Constructor
      *
      * @param \Slim\App $app
@@ -28,7 +33,7 @@ class Agent
     public function __construct($app)
     {
         $this->app = $app;
-        $this->container = $this->app->getContainer();
+        $this->container = $app->getContainer();
     }
 
     /**
@@ -37,25 +42,54 @@ class Agent
     public function assertResponseOk()
     {
         $actual = $this->response->getStatusCode();
+
         Assert::assertTrue($this->response->isOk(), "Expected status code 200, got {$actual}.");
     }
 
+    /**
+     * Run get HTTP method
+     *
+     * @param string $url
+     */
     public function get($url)
     {
         $environmentMock = Environment::mock([
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => $url,
         ]);
+
         $this->container['environment'] = $environmentMock;
 
-        $this->app->run(true);
+        $this->response = $this->app->run(true);
 
         return $this;
     }
 
+    public function getBody()
+    {
+        return (string) $this->response->getBody();
+    }
+
+    /**
+     * Return status code
+     *
+     * @return int
+     */
+    public function getStatusCode()
+    {
+        $statusCode = $this->response->getStatusCode();
+
+        return $statusCode;
+    }
+
+    /**
+     * Return true when status code is 200. Otherwise, return false
+     *
+     * @return boolean
+     */
     public function isOk()
     {
-        $statusCode = $this->container['response']->getStatusCode();
+        $statusCode = $this->getStatusCode();
 
         return 200 === $statusCode;
     }

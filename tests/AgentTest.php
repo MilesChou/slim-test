@@ -17,25 +17,38 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
-        $app = Factory::getInstance();
-
-        $this->target = new Agent($app);
     }
 
     public function tearDown()
     {
-        $this->target = null;
     }
 
     public function testItShouldReturnTrueWhenVisitWillReturnOKAndCallFunctionIsOk()
     {
         // Arrange
         $url = '/will/return/ok';
+        $app = Factory::getInstance();
+        $target = new Agent($app);
 
         // Act
-        $actual = $this->target->get('/will/return/ok')->isOk();
+        $actual = $target->get($url)->isOk();
 
         // Assert
         $this->assertTrue($actual);
+    }
+
+    public function testItShouldReturn500WhenVisitWillReturn500AndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/will/return/500';
+        $excepted = 500;
+        $app = Factory::getInstance();
+        $target = new Agent($app);
+
+        // Act
+        $actual = $target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
     }
 }
