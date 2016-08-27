@@ -35,6 +35,7 @@ class AgentTest extends TestCase
         // Act
         $actual = $this->target->get('/will/return/ok')->isOk();
 
+        // Assert
         $this->assertTrue($actual);
     }
 }
