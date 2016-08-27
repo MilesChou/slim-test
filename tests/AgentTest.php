@@ -7,6 +7,7 @@
 namespace Miles\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
+use SlimFactory as Factory;
 
 class AgentTest extends TestCase
 {
@@ -17,7 +18,7 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
-        $app = getApp();
+        $app = Factory::getInstance();
 
         $this->target = new Agent($app);
     }
