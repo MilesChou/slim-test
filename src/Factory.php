@@ -22,15 +22,17 @@ class Factory
      */
     public static function getInstance()
     {
-        return self::$builder();
+        $build = self::$builder;
+
+        return $build();
     }
 
     /**
      * Init builder
      *
-     * @param Closure
+     * @param Callable
      */
-    public static function init(Closure $builder)
+    public static function init(callable $builder)
     {
         self::$builder = $builder;
     }

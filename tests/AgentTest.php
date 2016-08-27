@@ -7,7 +7,6 @@
 namespace Miles\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
-use SlimFactory as Factory;
 
 class AgentTest extends TestCase
 {
