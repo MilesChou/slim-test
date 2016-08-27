@@ -1,5 +1,7 @@
 # Slim Test
 
+[![Build Status](https://travis-ci.org/MilesChou/slim-test.svg?branch=master)](https://travis-ci.org/MilesChou/slim-test)
+
 [Slim][] Testing helper.
 
 ## License
