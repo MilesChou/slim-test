@@ -17,24 +17,51 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
+        $app = Factory::getInstance();
+        $this->target = new Agent($app);
     }
 
     public function tearDown()
     {
+        $this->target = null;
     }
 
     public function testItShouldReturnTrueWhenVisitWillReturnOKAndCallFunctionIsOk()
     {
         // Arrange
         $url = '/will/return/ok';
-        $app = Factory::getInstance();
-        $target = new Agent($app);
 
         // Act
-        $actual = $target->get($url)->isOk();
+        $actual = $this->target->get($url)->isOk();
 
         // Assert
         $this->assertTrue($actual);
+    }
+
+    public function testItShouldReturn200WhenVisitWillReturnOKAndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 200;
+
+        // Act
+        $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/not/exist/page';
+        $excepted = 404;
+
+        // Act
+        $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
     }
 
     public function testItShouldReturn500WhenVisitWillReturn500AndCallFunctionGetStatusCode()
@@ -42,11 +69,9 @@ class AgentTest extends TestCase
         // Arrange
         $url = '/will/return/500';
         $excepted = 500;
-        $app = Factory::getInstance();
-        $target = new Agent($app);
 
         // Act
-        $actual = $target->get($url)->getStatusCode();
+        $actual = $this->target->get($url)->getStatusCode();
 
         // Assert
         $this->assertEquals($excepted, $actual);
