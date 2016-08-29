@@ -77,7 +77,7 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
-    public function testItShouldReturnJsonWhenVisitHeaderTestingAndCallGetHeader()
+    public function testItShouldReturnJsonTypeWhenVisitDataEmptyAndCallGetHeader()
     {
         // Arrange
         $url = '/data/empty';
@@ -86,6 +86,48 @@ class AgentTest extends TestCase
         // Act
         $this->target->haveHeader('Accept', 'application/json');
         $actual = $this->target->get($url)->getResponesHeader('Content-type')[0];
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnJsonTypeAndNullWhenVisitDataNullAndCallGetBody()
+    {
+        // Arrange
+        $url = '/data/null';
+        $excepted = 'null';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $actual = $this->target->get($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnXmlTypeWhenVisitDataNullAndCallGetBody()
+    {
+        // Arrange
+        $url = '/data/null';
+        $excepted = "<?xml version=\"1.0\"?>\n<root/>\n";
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/xml');
+        $actual = $this->target->get($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturn500WhenVisitDataNullAndCallGetStatusCode()
+    {
+        // Arrange
+        $url = '/data/null';
+        $excepted = 500;
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/unknown');
+        $actual = $this->target->get($url)->getStatusCode();
 
         // Assert
         $this->assertEquals($excepted, $actual);
