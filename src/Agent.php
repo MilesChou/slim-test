@@ -64,6 +64,26 @@ class Agent
     }
 
     /**
+     * Run post HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function post($url, $data = [])
+    {
+        $environmentMock = Environment::mock(array_merge([
+            'REQUEST_METHOD' => 'POST',
+            'REQUEST_URI' => $url,
+        ], $this->headers));
+
+        $this->container['environment'] = $environmentMock;
+
+        $this->response = $this->app->run(true);
+
+        return $this;
+    }
+
+    /**
      * Return response body
      *
      * @return int

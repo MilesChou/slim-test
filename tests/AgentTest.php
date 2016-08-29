@@ -51,6 +51,19 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
+    public function testItShouldReturnPostOKWhenPostWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'POST OK';
+
+        // Act
+        $actual = $this->target->post($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
     public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
     {
         // Arrange

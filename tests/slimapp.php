@@ -10,6 +10,12 @@ $app->get('/will/return/ok', function (Request $request, Response $response) {
     return $response->withStatus(200);
 });
 
+$app->post('/will/return/ok', function (Request $request, Response $response) {
+    $response->getBody()->write('POST OK');
+    
+    return $response->withStatus(200);
+});
+
 $app->get('/will/return/500', function (Request $request, Response $response) {
     return $response->withStatus(500);
 });
