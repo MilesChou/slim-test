@@ -15,10 +15,33 @@ $app->get('/will/return/500', function (Request $request, Response $response) {
 });
 
 $app->any('/data/empty', function (Request $request, Response $response) {
-    $dataType = $request->getHeader('Accept');
+    $acceptHeader = $request->getHeader('Accept');
     $response->getBody()->write('');
 
-    return $response->withStatus(200)->withHeader('Content-type', $dataType);
+    return $response->withStatus(200)->withHeader('Content-type', $acceptHeader);
+});
+
+$app->any('/data/null', function (Request $request, Response $response) {
+    $acceptHeader = $request->getHeader('Accept');
+    $data = null;
+
+    switch (true) {
+        case in_array('application/json', $acceptHeader):
+            $newResponse = $response->withStatus(200)
+                ->withHeader('Content-type', $acceptHeader);
+            $newResponse->getBody()->write(json_encode($data));
+            break;
+        case in_array('application/xml', $acceptHeader):
+            $xml = new SimpleXMLElement('<root/>');
+            $newResponse = $response->withStatus(200)
+                ->withHeader('Content-type', $acceptHeader);
+            $newResponse->getBody()->write($xml->asXml());
+            break;
+        default:
+            $newResponse = $response->withStatus(500);
+    }
+
+    return $newResponse;
 });
 
 return $app;
