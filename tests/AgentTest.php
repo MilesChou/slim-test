@@ -17,8 +17,7 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
-        $app = Factory::getInstance();
-
+        $app = require __DIR__ . '/slimapp.php';
         $this->target = new Agent($app);
     }
 
@@ -33,9 +32,48 @@ class AgentTest extends TestCase
         $url = '/will/return/ok';
 
         // Act
-        $actual = $this->target->get('/will/return/ok')->isOk();
+        $actual = $this->target->get($url)->isOk();
 
         // Assert
         $this->assertTrue($actual);
+    }
+
+    public function testItShouldReturn200WhenVisitWillReturnOKAndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 200;
+
+        // Act
+        $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/not/exist/page';
+        $excepted = 404;
+
+        // Act
+        $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturn500WhenVisitWillReturn500AndCallFunctionGetStatusCode()
+    {
+        // Arrange
+        $url = '/will/return/500';
+        $excepted = 500;
+
+        // Act
+        $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
     }
 }
