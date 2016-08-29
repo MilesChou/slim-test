@@ -55,10 +55,53 @@ class AgentTest extends TestCase
     {
         // Arrange
         $url = '/will/return/ok';
-        $excepted = 'POST OK';
+        $excepted = 'POST OK []';
 
         // Act
         $actual = $this->target->post($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnPostOkAndJsonStringWhenPostWithDataWillReturnOkAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $data = [
+            'data' => [1,2,3,4,5],
+        ];
+        $excepted = 'POST OK ' . json_encode($data);
+        //$this->target->haveHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        // Act
+        $actual = $this->target->post($url, $data)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnPutOKWhenPutWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'PUT OK';
+
+        // Act
+        $actual = $this->target->put($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnPutErrorWhenPutWillReturnErrorAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/error';
+        $excepted = 'PUT ERROR';
+
+        // Act
+        $actual = $this->target->put($url)->getBody();
 
         // Assert
         $this->assertEquals($excepted, $actual);

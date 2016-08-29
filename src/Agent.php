@@ -7,6 +7,11 @@
 namespace Framins\Slim\Test;
 
 use Slim\Http\Environment;
+use Slim\Http\Headers;
+use Slim\Http\Request;
+use Slim\Http\RequestBody;
+use Slim\Http\Response;
+use Slim\Http\Uri;
 
 /**
  * The agent for slim app
@@ -68,17 +73,59 @@ class Agent
      *
      * @param string $url
      * @param array $data
+     * @return Reponse
      */
     public function post($url, $data = [])
     {
-        $environmentMock = Environment::mock(array_merge([
+        $environment = Environment::mock(array_merge([
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => $url,
         ], $this->headers));
 
-        $this->container['environment'] = $environmentMock;
+        $uri = Uri::createFromEnvironment($environment);
+        $headers = Headers::createFromEnvironment($environment);
+        $cookies = [];
+        $servers = $environment->all();
+        $body = new RequestBody();
 
-        $this->response = $this->app->run(true);
+        $headers->set('Content-Type', 'application/json;charset=utf8');
+        $body->write(json_encode($data));
+
+        $this->request  = new Request('POST', $uri, $headers, $cookies, $servers, $body);
+
+        $app = $this->app;
+
+        $this->response = $app($this->request, new Response());
+
+        return $this;
+    }
+
+    /**
+     * @param string $url
+     * @param array $data
+     * @return Reponse
+     */
+    public function put($url, $data = [])
+    {
+        $environment = Environment::mock(array_merge([
+            'REQUEST_METHOD' => 'PUT',
+            'REQUEST_URI' => $url,
+        ], $this->headers));
+
+        $uri = Uri::createFromEnvironment($environment);
+        $headers = Headers::createFromEnvironment($environment);
+        $cookies = [];
+        $servers = $environment->all();
+        $body = new RequestBody();
+
+        $headers->set('Content-Type', 'application/json;charset=utf8');
+        $body->write(json_encode($data));
+
+        $this->request  = new Request('PUT', $uri, $headers, $cookies, $servers, $body);
+
+        $app = $this->app;
+
+        $this->response = $app($this->request, new Response());
 
         return $this;
     }

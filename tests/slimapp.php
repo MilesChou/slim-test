@@ -11,8 +11,23 @@ $app->get('/will/return/ok', function (Request $request, Response $response) {
 });
 
 $app->post('/will/return/ok', function (Request $request, Response $response) {
-    $response->getBody()->write('POST OK');
-    
+    $body = $request->getParsedBody();
+    $response->getBody()->write('POST OK ' . json_encode($body));
+
+    return $response->withStatus(200);
+});
+
+$app->put('/will/return/ok', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    $response->getBody()->write('PUT OK');
+
+    return $response->withStatus(200);
+});
+
+$app->put('/will/return/error', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    $response->getBody()->write('PUT ERROR');
+
     return $response->withStatus(200);
 });
 
