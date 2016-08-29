@@ -17,7 +17,7 @@ class AgentTest extends TestCase
 
     public function setUp()
     {
-        $app = Factory::getInstance();
+        $app = require __DIR__ . '/slimapp.php';
         $this->target = new Agent($app);
     }
 

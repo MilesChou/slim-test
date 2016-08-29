@@ -8,6 +8,9 @@ namespace Framins\Slim\Test;
 
 use Slim\Http\Environment;
 
+/**
+ * The agent for slim app
+ */
 class Agent
 {
     /**

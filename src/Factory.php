@@ -8,6 +8,9 @@ namespace Framins\Slim\Test;
 
 use Slim\Http\Environment;
 
+/**
+ * This factory is use to global access Slim app, but it's only valid PHP >= 7.0 / HHVM ...
+ */
 class Factory
 {
     /**
