@@ -7,17 +7,18 @@ $container = new Slim\Container();
 $app = new Slim\App();
 
 $app->get('/will/return/ok', function (Request $request, Response $response) {
-    $response->getBody()->write('200');
-    $newReponse = $response->withStatus(200);
-
-    return $newReponse;
+    return $response->withStatus(200);
 });
 
 $app->get('/will/return/500', function (Request $request, Response $response) {
-    $response->getBody()->write('500');
-    $newReponse = $response->withStatus(500);
+    return $response->withStatus(500);
+});
 
-    return $newReponse;
+$app->any('/data/empty', function (Request $request, Response $response) {
+    $dataType = $request->getHeader('Accept');
+    $response->getBody()->write('');
+
+    return $response->withStatus(200)->withHeader('Content-type', $dataType);
 });
 
 return $app;

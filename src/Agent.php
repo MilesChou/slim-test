@@ -16,17 +16,22 @@ class Agent
     /**
      * @var \Slim\App
      */
-    protected $app;
+    private $app;
 
     /**
      * @var \Slim\Container
      */
-    protected $container;
+    private $container;
+
+    /**
+     * @var array
+     */
+    private $headers = [];
 
     /**
      * @var \Slim\Http\Response
      */
-    protected $response;
+    private $response;
 
     /**
      * Constructor
@@ -40,26 +45,16 @@ class Agent
     }
 
     /**
-     * Assert that the client response has an OK status code.
-     */
-    public function assertResponseOk()
-    {
-        $actual = $this->response->getStatusCode();
-
-        Assert::assertTrue($this->response->isOk(), "Expected status code 200, got {$actual}.");
-    }
-
-    /**
      * Run get HTTP method
      *
      * @param string $url
      */
     public function get($url)
     {
-        $environmentMock = Environment::mock([
+        $environmentMock = Environment::mock(array_merge([
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => $url,
-        ]);
+        ], $this->headers));
 
         $this->container['environment'] = $environmentMock;
 
@@ -68,6 +63,11 @@ class Agent
         return $this;
     }
 
+    /**
+     * Return response body
+     *
+     * @return int
+     */
     public function getBody()
     {
         return (string) $this->response->getBody();
@@ -95,5 +95,32 @@ class Agent
         $statusCode = $this->getStatusCode();
 
         return 200 === $statusCode;
+    }
+
+    /**
+     * Set http header mock
+     *
+     * @param string $name
+     * @param string $value
+     */
+    public function haveHeader($name, $value)
+    {
+        $prefix = 'HTTP_';
+        $name = $prefix . strtr(strtoupper($name), '-', '_');
+
+        $this->headers[$name] = $value;
+    }
+
+    /**
+     * Get respones http header
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getResponesHeader($name)
+    {
+        $header = $this->response->getHeader($name);
+
+        return $header;
     }
 }

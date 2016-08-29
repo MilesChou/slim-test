@@ -76,4 +76,18 @@ class AgentTest extends TestCase
         // Assert
         $this->assertEquals($excepted, $actual);
     }
+
+    public function testItShouldReturnJsonWhenVisitHeaderTestingAndCallGetHeader()
+    {
+        // Arrange
+        $url = '/data/empty';
+        $excepted = 'application/json';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $actual = $this->target->get($url)->getResponesHeader('Content-type')[0];
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
 }
