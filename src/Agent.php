@@ -7,6 +7,11 @@
 namespace Framins\Slim\Test;
 
 use Slim\Http\Environment;
+use Slim\Http\Headers;
+use Slim\Http\Request;
+use Slim\Http\RequestBody;
+use Slim\Http\Response;
+use Slim\Http\Uri;
 
 /**
  * The agent for slim app
@@ -17,11 +22,6 @@ class Agent
      * @var \Slim\App
      */
     private $app;
-
-    /**
-     * @var \Slim\Container
-     */
-    private $container;
 
     /**
      * @var array
@@ -41,24 +41,132 @@ class Agent
     public function __construct($app)
     {
         $this->app = $app;
-        $this->container = $app->getContainer();
     }
 
     /**
-     * Run get HTTP method
+     * Run GET HTTP method
      *
      * @param string $url
+     * @param array $data
+     * @return Agent
      */
-    public function get($url)
+    public function get($url, $data = [])
     {
-        $environmentMock = Environment::mock(array_merge([
-            'REQUEST_METHOD' => 'GET',
+        return $this->request('GET', $url, $data);
+    }
+
+    /**
+     * Run POST HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function post($url, $data = [])
+    {
+        return $this->request('POST', $url, $data);
+    }
+
+    /**
+     * Run PATCH HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function patch($url, $data = [])
+    {
+        return $this->request('PATCH', $url, $data);
+    }
+
+    /**
+     * Run PUT HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function put($url, $data = [])
+    {
+        return $this->request('PUT', $url, $data);
+    }
+
+    /**
+     * Run DELETE HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function delete($url, $data = [])
+    {
+        return $this->request('DELETE', $url, $data);
+    }
+
+    /**
+     * Run HEAD HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function head($url, $data = [])
+    {
+        return $this->request('HEAD', $url, $data);
+    }
+
+    /**
+     * Run OPTIONS HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function options($url, $data = [])
+    {
+        return $this->request('OPTIONS', $url, $data);
+    }
+
+    /**
+     * General request
+     *
+     * @param string $method
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function request($method, $url, $data = [])
+    {
+        // Reference from https://github.com/there4/slim-test-helpers/
+        $options = [
+            'REQUEST_METHOD' => $method,
             'REQUEST_URI' => $url,
-        ], $this->headers));
+        ];
 
-        $this->container['environment'] = $environmentMock;
+        if ($method === 'GET') {
+            $options['QUERY_STRING'] = http_build_query($data);
+        } else {
+            $params  = json_encode($data);
+        }
 
-        $this->response = $this->app->run(true);
+        $environment = Environment::mock(array_merge($options, $this->headers));
+        $uri = Uri::createFromEnvironment($environment);
+        $headers = Headers::createFromEnvironment($environment);
+        $cookies = [];
+        $servers = $environment->all();
+        $body = new RequestBody();
+
+        if (isset($params)) {
+            $headers->set('Content-Type', 'application/json;charset=utf8');
+            $body->write(json_encode($data));
+        }
+
+        // Build Request
+        $this->request  = new Request($method, $uri, $headers, $cookies, $servers, $body);
+
+        // Build Response via App
+        $app = $this->app;
+        $this->response = $app($this->request, new Response());
 
         return $this;
     }

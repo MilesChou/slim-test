@@ -26,31 +26,6 @@ class AgentTest extends TestCase
         $this->target = null;
     }
 
-    public function testItShouldReturnTrueWhenVisitWillReturnOKAndCallFunctionIsOk()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-
-        // Act
-        $actual = $this->target->get($url)->isOk();
-
-        // Assert
-        $this->assertTrue($actual);
-    }
-
-    public function testItShouldReturn200WhenVisitWillReturnOKAndCallFunctionGetStatusCode()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 200;
-
-        // Act
-        $actual = $this->target->get($url)->getStatusCode();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
     public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
     {
         // Arrange
@@ -75,6 +50,96 @@ class AgentTest extends TestCase
 
         // Assert
         $this->assertEquals($excepted, $actual);
+    }
+
+    /**
+     * Target method definitions
+     */
+    public function whenVisitWillReturnOkProvider()
+    {
+        return [
+            ['get'],
+            ['post'],
+            ['put'],
+            ['delete'],
+            ['head'],
+            ['patch'],
+            ['options'],
+        ];
+    }
+
+    /**
+     * Test 200 ok response with all method
+     *
+     * @dataProvider whenVisitWillReturnOkProvider
+     * @param string $method
+     */
+    public function testItShouldReturnMethodOkWhenVisitWillReturnOkAndCallFunctionGetBody($method)
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $exceptedBody = strtoupper($method) . ' OK []';
+        $exceptedStatusCode = 200;
+
+        // Act
+        $actualTarget = $this->target->$method($url);
+        $actualBody = $actualTarget->getBody();
+        $actualStatusCode = $actualTarget->getStatusCode();
+        $actualIsOk = $actualTarget->isOk();
+
+        // Assert
+        $this->assertEquals($exceptedStatusCode, $actualStatusCode);
+        $this->assertEquals($exceptedBody, $actualBody);
+        $this->assertTrue($actualIsOk);
+    }
+
+    /**
+     * Test 200 ok response and data string with all method and simple data
+     *
+     * @dataProvider whenVisitWillReturnOkProvider
+     * @param string $method
+     */
+    public function testItShouldReturnMethodOkAndDataStringWhenVisitWillReturnOkByDataAndCallFunctionGetBody($method)
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $data = ['data' => ['foo', 'bar']];
+        $exceptedBody = strtoupper($method) . ' OK ' . json_encode($data);
+        $exceptedStatusCode = 200;
+
+        // Act
+        $actualTarget = $this->target->$method($url, $data);
+        $actualBody = $actualTarget->getBody();
+        $actualStatusCode = $actualTarget->getStatusCode();
+        $actualIsOk = $actualTarget->isOk();
+
+        // Assert
+        $this->assertEquals($exceptedStatusCode, $actualStatusCode);
+        $this->assertEquals($exceptedBody, $actualBody);
+        $this->assertTrue($actualIsOk);
+    }
+
+    /**
+     * Test 500 error response with all method
+     *
+     * @dataProvider whenVisitWillReturnOkProvider
+     * @param string $method
+     */
+    public function testItShouldReturnMethodErrorWhenVisitWillReturnErrorAndCallFunctionGetBody($method)
+    {
+        // Arrange
+        $url = '/will/return/error';
+        $exceptedBody = strtoupper($method) . ' ERROR []';
+        $exceptedStatusCode = 500;
+
+        // Act
+        $actualTarget = $this->target->$method($url);
+        $actualBody = $actualTarget->getBody();
+        $actualStatusCode = $actualTarget->getStatusCode();
+
+        // Assert
+        $this->assertEquals($exceptedStatusCode, $actualStatusCode);
+        $this->assertEquals($exceptedBody, $actualBody);
     }
 
     public function testItShouldReturnJsonTypeWhenVisitDataEmptyAndCallGetHeader()
