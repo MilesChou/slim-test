@@ -20,6 +20,14 @@ $app->any('/will/return/ok', function (Request $request, Response $response) {
     return $response->withStatus(200);
 });
 
+$app->any('/will/return/cookies', function (Request $request, Response $response) {
+    $cookies = $request->getCookieParams();
+    $method = $request->getMethod();
+    $response->getBody()->write($method . ' COOKIES ' . json_encode($cookies));
+
+    return $response->withStatus(500);
+});
+
 $app->any('/will/return/error', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
     $method = $request->getMethod();

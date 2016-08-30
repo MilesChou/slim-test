@@ -8,17 +8,17 @@ namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-class AgentTest extends TestCase
+class ClientTest extends TestCase
 {
     /**
-     * @var Agent
+     * @var Client
      */
     private $target;
 
     public function setUp()
     {
         $app = require __DIR__ . '/slimapp.php';
-        $this->target = new Agent($app);
+        $this->target = new Client($app);
     }
 
     public function tearDown()
@@ -26,7 +26,7 @@ class AgentTest extends TestCase
         $this->target = null;
     }
 
-    public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
+    public function testItShouldReturn404WhenVisitNotExistPageAndCallGetStatusCode()
     {
         // Arrange
         $url = '/not/exist/page';
@@ -39,7 +39,7 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
-    public function testItShouldReturn500WhenVisitWillReturn500AndCallFunctionGetStatusCode()
+    public function testItShouldReturn500WhenVisitWillReturn500AndCallGetStatusCode()
     {
         // Arrange
         $url = '/will/return/500';
@@ -74,7 +74,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodOkWhenVisitWillReturnOkAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodOkWhenVisitWillReturnOkAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/ok';
@@ -99,7 +99,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodOkAndDataStringWhenVisitWillReturnOkByDataAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodOkAndDataStringWhenVisitWillReturnOkByDataAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/ok';
@@ -120,12 +120,35 @@ class AgentTest extends TestCase
     }
 
     /**
+     * Test 200 ok response and data string with all method and simple data
+     *
+     * @dataProvider whenVisitWillReturnOkProvider
+     * @param string $method
+     */
+    public function testItShouldReturnCookiesDataStringWhenVisitWillReturnOkByCookiesAndCallGetBody($method)
+    {
+        // Arrange
+        $url = '/will/return/cookies';
+        $cookiesName = 'cookies';
+        $cookiesValue = ['foo', 'bar'];
+        $exceptedBody = strtoupper($method) . ' COOKIES ' . json_encode([$cookiesName => $cookiesValue]);
+
+        // Act
+        $this->target->haveCookies($cookiesName, $cookiesValue);
+        $this->target->$method($url);
+        $actualBody = $this->target->getBody();
+
+        // Assert
+        $this->assertEquals($exceptedBody, $actualBody);
+    }
+
+    /**
      * Test 500 error response with all method
      *
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodErrorWhenVisitWillReturnErrorAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodErrorWhenVisitWillReturnErrorAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/error';
@@ -142,6 +165,9 @@ class AgentTest extends TestCase
         $this->assertEquals($exceptedBody, $actualBody);
     }
 
+    /**
+     * Test header
+     */
     public function testItShouldReturnJsonTypeWhenVisitDataEmptyAndCallGetHeader()
     {
         // Arrange

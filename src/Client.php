@@ -14,14 +14,19 @@ use Slim\Http\Response;
 use Slim\Http\Uri;
 
 /**
- * The agent for slim app
+ * The client for slim app
  */
-class Agent
+class Client
 {
     /**
      * @var \Slim\App
      */
     private $app;
+
+    /**
+     * @var array
+     */
+    private $cookies = [];
 
     /**
      * @var array
@@ -47,8 +52,8 @@ class Agent
      * Run GET HTTP method
      *
      * @param string $url
-     * @param array $data
-     * @return Agent
+     * @param array $data This array will transfer to query string
+     * @return this
      */
     public function get($url, $data = [])
     {
@@ -60,7 +65,7 @@ class Agent
      *
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function post($url, $data = [])
     {
@@ -68,23 +73,11 @@ class Agent
     }
 
     /**
-     * Run PATCH HTTP method
-     *
-     * @param string $url
-     * @param array $data
-     * @return Agent
-     */
-    public function patch($url, $data = [])
-    {
-        return $this->request('PATCH', $url, $data);
-    }
-
-    /**
      * Run PUT HTTP method
      *
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function put($url, $data = [])
     {
@@ -96,7 +89,7 @@ class Agent
      *
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function delete($url, $data = [])
     {
@@ -108,7 +101,7 @@ class Agent
      *
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function head($url, $data = [])
     {
@@ -116,11 +109,23 @@ class Agent
     }
 
     /**
+     * Run PATCH HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return this
+     */
+    public function patch($url, $data = [])
+    {
+        return $this->request('PATCH', $url, $data);
+    }
+
+    /**
      * Run OPTIONS HTTP method
      *
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function options($url, $data = [])
     {
@@ -133,7 +138,7 @@ class Agent
      * @param string $method
      * @param string $url
      * @param array $data
-     * @return Agent
+     * @return this
      */
     public function request($method, $url, $data = [])
     {
@@ -152,7 +157,7 @@ class Agent
         $environment = Environment::mock(array_merge($options, $this->headers));
         $uri = Uri::createFromEnvironment($environment);
         $headers = Headers::createFromEnvironment($environment);
-        $cookies = [];
+        $cookies = $this->cookies;
         $servers = $environment->all();
         $body = new RequestBody();
 
@@ -182,6 +187,19 @@ class Agent
     }
 
     /**
+     * Get http header of response
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getResponesHeader($name)
+    {
+        $header = $this->response->getHeader($name);
+
+        return $header;
+    }
+
+    /**
      * Return status code
      *
      * @return int
@@ -194,15 +212,14 @@ class Agent
     }
 
     /**
-     * Return true when status code is 200. Otherwise, return false
+     * Set cookies
      *
-     * @return boolean
+     * @param string $name
+     * @param string $value
      */
-    public function isOk()
+    public function haveCookies($name, $value)
     {
-        $statusCode = $this->getStatusCode();
-
-        return 200 === $statusCode;
+        $this->cookies[$name] = $value;
     }
 
     /**
@@ -220,15 +237,14 @@ class Agent
     }
 
     /**
-     * Get respones http header
+     * Return true when status code is 200. Otherwise, return false
      *
-     * @param string $name
-     * @return array
+     * @return boolean
      */
-    public function getResponesHeader($name)
+    public function isOk()
     {
-        $header = $this->response->getHeader($name);
+        $statusCode = $this->getStatusCode();
 
-        return $header;
+        return 200 === $statusCode;
     }
 }
