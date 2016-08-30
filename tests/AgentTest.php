@@ -165,6 +165,9 @@ class AgentTest extends TestCase
         $this->assertEquals($exceptedBody, $actualBody);
     }
 
+    /**
+     * Test header
+     */
     public function testItShouldReturnJsonTypeWhenVisitDataEmptyAndCallGetHeader()
     {
         // Arrange
