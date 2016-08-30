@@ -78,8 +78,15 @@ class SlimCase
         PHPUnit::assertEquals($excepted, $actual);
     }
 
-    public function seeResponseOk()
+    /**
+     * @param string $message Addition message
+     */
+    public function seeResponseOk($message = '')
     {
-        PHPUnit::assertTrue($this->isOk());
+        $actual = $this->getStatusCode();
+
+        $constraint = new Constraint\ResponseIsOk();
+
+        PHPUnit::assertThat($actual, $constraint, $message);
     }
 }
