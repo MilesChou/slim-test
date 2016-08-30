@@ -8,7 +8,7 @@ namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-class AssertionTest extends TestCase
+class SlimCaseTest extends TestCase
 {
     /**
      * @var Client
@@ -18,7 +18,7 @@ class AssertionTest extends TestCase
     public function setUp()
     {
         $app = require __DIR__ . '/slimapp.php';
-        $this->target = new Client($app);
+        $this->target = new SlimCase($app);
     }
 
     public function tearDown()

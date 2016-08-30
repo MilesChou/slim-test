@@ -18,8 +18,6 @@ use Slim\Http\Uri;
  */
 class Client
 {
-    use AssertionTrait;
-
     /**
      * @var \Slim\App
      */
