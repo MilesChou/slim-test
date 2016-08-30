@@ -107,6 +107,20 @@ class SlimCase
     }
 
     /**
+     * @param string $excepted
+     * @param string $message
+     */
+    public function seeResponseContains($excepted, $message = '')
+    {
+        $excepted = (string) $excepted;
+        $actual = $this->getBody();
+
+        $constraint = new Constraint\ResponseContains($excepted);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
      * @param string $message
      */
     public function seeResponseOk($message = '')

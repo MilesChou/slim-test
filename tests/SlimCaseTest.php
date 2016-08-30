@@ -72,6 +72,20 @@ class SlimCaseTest extends TestCase
         $this->target->seeResponseCodeIs(200);
     }
 
+    public function testSeeResponseContains()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->seeResponseContains('GET');
+        $this->target->seeResponseContains('OK');
+        $this->target->seeResponseContains('[]');
+    }
+
     public function testSeeResponseOk()
     {
         // Arrange
