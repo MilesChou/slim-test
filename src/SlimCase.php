@@ -8,7 +8,7 @@ namespace Framins\Slim\Test;
 
 use ReflectionClass;
 use BadMethodCallException;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * The Slim's TestCase named SlimCase
