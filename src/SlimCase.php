@@ -6,8 +6,9 @@
  */
 namespace Framins\Slim\Test;
 
-use ReflectionClass;
 use BadMethodCallException;
+use ReflectionClass;
+use ReflectionException;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
@@ -44,12 +45,16 @@ class SlimCase
 
     public function __call($name, $args)
     {
-        if ($method = $this->reflectionClient->getMethod($name)) {
+        try {
+            $method = $this->reflectionClient->getMethod($name);
             if ($method->isPublic() && !$method->isAbstract()) {
                 return $method->invokeArgs($this->client, $args);
+            } else {
+                // TODO: Patch test if add new private method in Client class
+                throw new BadMethodCallException("Method: '$name' is not public");
             }
-        } else {
-            throw new BadMethodCallException("Method: '$method' is not supported");
+        } catch (ReflectionException $e) {
+            throw new BadMethodCallException("Method: '$name' is not supported");
         }
     }
 

@@ -26,6 +26,16 @@ class SlimCaseTest extends TestCase
         $this->target = null;
     }
 
+    /**
+     * @expectedException BadMethodCallException
+     * @expectedExceptionMessageRegExp /undefinedMethod/
+     */
+    public function testUndefinedMethod()
+    {
+        // Act & Assert
+        $this->target->undefinedMethod();
+    }
+
     public function testDontSeeResponseCodeIs()
     {
         // Arrange
