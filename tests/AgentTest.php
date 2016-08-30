@@ -103,7 +103,7 @@ class AgentTest extends TestCase
     {
         // Arrange
         $url = '/will/return/ok';
-        $data = ['data' => [1, 2, 3, 4, 5]];
+        $data = ['data' => ['foo', 'bar']];
         $exceptedBody = strtoupper($method) . ' OK ' . json_encode($data);
         $exceptedStatusCode = 200;
 

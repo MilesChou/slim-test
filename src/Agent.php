@@ -137,24 +137,35 @@ class Agent
      */
     public function request($method, $url, $data = [])
     {
-        $environment = Environment::mock(array_merge([
+        // Reference from https://github.com/there4/slim-test-helpers/
+        $options = [
             'REQUEST_METHOD' => $method,
             'REQUEST_URI' => $url,
-        ], $this->headers));
+        ];
 
+        if ($method === 'GET') {
+            $options['QUERY_STRING'] = http_build_query($data);
+        } else {
+            $params  = json_encode($data);
+        }
+
+        $environment = Environment::mock(array_merge($options, $this->headers));
         $uri = Uri::createFromEnvironment($environment);
         $headers = Headers::createFromEnvironment($environment);
         $cookies = [];
         $servers = $environment->all();
         $body = new RequestBody();
 
-        $headers->set('Content-Type', 'application/json;charset=utf8');
-        $body->write(json_encode($data));
+        if (isset($params)) {
+            $headers->set('Content-Type', 'application/json;charset=utf8');
+            $body->write(json_encode($data));
+        }
 
+        // Build Request
         $this->request  = new Request($method, $uri, $headers, $cookies, $servers, $body);
 
+        // Build Response via App
         $app = $this->app;
-
         $this->response = $app($this->request, new Response());
 
         return $this;

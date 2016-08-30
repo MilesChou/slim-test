@@ -10,6 +10,11 @@ $app = new Slim\App();
 $app->any('/will/return/ok', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
     $method = $request->getMethod();
+    if ($method == 'GET') {
+        $query = $request->getUri()->getQuery();
+        $body = [];
+        parse_str($query, $body);
+    }
     $response->getBody()->write($method . ' OK ' . json_encode($body));
 
     return $response->withStatus(200);
@@ -18,6 +23,11 @@ $app->any('/will/return/ok', function (Request $request, Response $response) {
 $app->any('/will/return/error', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
     $method = $request->getMethod();
+    if ($method == 'GET') {
+        $query = $request->getUri()->getQuery();
+        $body = [];
+        parse_str($query, $body);
+    }
     $response->getBody()->write($method . ' ERROR ' . json_encode($body));
 
     return $response->withStatus(500);
