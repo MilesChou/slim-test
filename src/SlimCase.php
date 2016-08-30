@@ -43,6 +43,12 @@ class SlimCase
         $this->reflectionClient = new ReflectionClass($this->client);
     }
 
+    /**
+     * Proxy to Client Class
+     *
+     * @param string $name
+     * @param array $args
+     */
     public function __call($name, $args)
     {
         try {
@@ -59,32 +65,47 @@ class SlimCase
     }
 
     /**
-     * @param int $actual
+     * @param int $excepted
+     * @param string $message
      */
-    public function dontSeeResponseCodeIs($actual)
+    public function dontSeeResponseCodeIs($excepted, $message = '')
     {
-        $excepted = $this->getStatusCode();
+        $excepted = (int) $excepted;
+        $actual = $this->getStatusCode();
 
-        PHPUnit::assertNotEquals($excepted, $actual);
-    }
+        $constraint = new Constraint\ResponseCodeIsNot($excepted);
 
-    public function dontSeeResponseOk()
-    {
-        PHPUnit::assertTrue(!$this->isOk());
+        PHPUnit::assertThat($actual, $constraint, $message);
     }
 
     /**
-     * @param int $actual
+     * @param string $message
      */
-    public function seeResponseCodeIs($actual)
+    public function dontSeeResponseOk($message = '')
     {
-        $excepted = $this->getStatusCode();
+        $actual = $this->getStatusCode();
 
-        PHPUnit::assertEquals($excepted, $actual);
+        $constraint = new Constraint\ResponseIsNotOk();
+
+        PHPUnit::assertThat($actual, $constraint, $message);
     }
 
     /**
-     * @param string $message Addition message
+     * @param int $excepted
+     * @param string $message
+     */
+    public function seeResponseCodeIs($excepted, $message = '')
+    {
+        $excepted = (int) $excepted;
+        $actual = $this->getStatusCode();
+
+        $constraint = new Constraint\ResponseCodeIs($excepted);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * @param string $message
      */
     public function seeResponseOk($message = '')
     {

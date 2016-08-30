@@ -7,9 +7,25 @@
 namespace Framins\Slim\Test\Constraint;
 
 use PHPUnit_Framework_Constraint;
+use PHPUnit_Util_InvalidArgumentHelper;
 
-class ResponseIsOk extends PHPUnit_Framework_Constraint
+class ResponseCodeIsNot extends PHPUnit_Framework_Constraint
 {
+    /**
+     * @var int
+     */
+    protected $value;
+
+    /**
+     * @param int $value HTTP status code
+     */
+    public function __construct($value)
+    {
+        parent::__construct();
+
+        $this->value = $value;
+    }
+
     /**
      * Evaluates the constraint for parameter $other.
      *
@@ -18,7 +34,7 @@ class ResponseIsOk extends PHPUnit_Framework_Constraint
      */
     protected function matches($other)
     {
-        return $other === 200;
+        return $other !== $this->value;
     }
 
     /**
@@ -26,6 +42,6 @@ class ResponseIsOk extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-        return 'is 200 (HTTP status code)';
+        return "is not equal {$this->value} (HTTP status code)";
     }
 }
