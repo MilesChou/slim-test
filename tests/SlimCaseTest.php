@@ -60,6 +60,21 @@ class SlimCaseTest extends TestCase
         $this->target->dontSeeResponseOk();
     }
 
+    public function testSeeHttpHeader()
+    {
+        // Arrange
+        $url = '/data/empty';
+        $excepted = 'application/json';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->get($url);
+
+        // Assert
+        $this->target->seeHttpHeader('Content-type');
+        $this->target->seeHttpHeader('Content-type', 'application/json');
+    }
+
     public function testSeeResponseCodeIs()
     {
         // Arrange

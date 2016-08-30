@@ -93,6 +93,24 @@ class SlimCase
     }
 
     /**
+     * @param string $exceptedName
+     * @param null|string $exceptedValue
+     * @param string $message
+     */
+    public function seeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
+    {
+        $exceptedName = (string) $exceptedName;
+        $exceptedValue = $exceptedValue;
+
+        $actualResponse = $this->client->getResponse();
+        $actual = $actualResponse->getHeaders();
+
+        $constraint = new Constraint\SeeHttpHeader($exceptedName, $exceptedValue);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
      * @param int $excepted
      * @param string $message
      */

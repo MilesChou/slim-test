@@ -187,6 +187,16 @@ class Client
     }
 
     /**
+     * Get Slim response
+     *
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
      * Get http header of response
      *
      * @param string $name
