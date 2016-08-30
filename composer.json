@@ -2,6 +2,17 @@
     "name": "framins/slim-test",
     "description": "Slim Testing helper",
     "type": "library",
+    "keywords": [
+        "slim",
+        "testing"
+    ],
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "MilesChou",
+            "email": "jangconan@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=5.5.0",
         "phpunit/phpunit": "^4.0",
@@ -26,11 +37,9 @@
             "php vendor/bin/phpunit"
         ]
     },
-    "license": "MIT License",
-    "authors": [
-        {
-            "name": "MilesChou",
-            "email": "jangconan@gmail.com"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
         }
-    ]
+    }
 }
