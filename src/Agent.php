@@ -44,7 +44,7 @@ class Agent
     }
 
     /**
-     * Run get HTTP method
+     * Run GET HTTP method
      *
      * @param string $url
      * @param array $data
@@ -56,7 +56,7 @@ class Agent
     }
 
     /**
-     * Run post HTTP method
+     * Run POST HTTP method
      *
      * @param string $url
      * @param array $data
@@ -68,7 +68,7 @@ class Agent
     }
 
     /**
-     * Run patch HTTP method
+     * Run PATCH HTTP method
      *
      * @param string $url
      * @param array $data
@@ -80,7 +80,7 @@ class Agent
     }
 
     /**
-     * Run put HTTP method
+     * Run PUT HTTP method
      *
      * @param string $url
      * @param array $data
@@ -92,7 +92,7 @@ class Agent
     }
 
     /**
-     * Run delete HTTP method
+     * Run DELETE HTTP method
      *
      * @param string $url
      * @param array $data
@@ -101,6 +101,30 @@ class Agent
     public function delete($url, $data = [])
     {
         return $this->request('DELETE', $url, $data);
+    }
+
+    /**
+     * Run HEAD HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function head($url, $data = [])
+    {
+        return $this->request('HEAD', $url, $data);
+    }
+
+    /**
+     * Run OPTIONS HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function options($url, $data = [])
+    {
+        return $this->request('OPTIONS', $url, $data);
     }
 
     /**

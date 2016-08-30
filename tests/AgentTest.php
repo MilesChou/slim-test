@@ -133,6 +133,32 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
+    public function testItShouldReturnHeadOKWhenHeadWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'HEAD OK []';
+
+        // Act
+        $actual = $this->target->head($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnOptionsOKWhenOptionsWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'OPTIONS OK []';
+
+        // Act
+        $actual = $this->target->options($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
     public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
     {
         // Arrange
