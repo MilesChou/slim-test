@@ -73,42 +73,27 @@ class Agent
      *
      * @param string $url
      * @param array $data
-     * @return Reponse
+     * @return Agent
      */
     public function post($url, $data = [])
     {
-        $environment = Environment::mock(array_merge([
-            'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI' => $url,
-        ], $this->headers));
-
-        $uri = Uri::createFromEnvironment($environment);
-        $headers = Headers::createFromEnvironment($environment);
-        $cookies = [];
-        $servers = $environment->all();
-        $body = new RequestBody();
-
-        $headers->set('Content-Type', 'application/json;charset=utf8');
-        $body->write(json_encode($data));
-
-        $this->request  = new Request('POST', $uri, $headers, $cookies, $servers, $body);
-
-        $app = $this->app;
-
-        $this->response = $app($this->request, new Response());
-
-        return $this;
+        return $this->request('POST', $url, $data);
     }
 
     /**
      * @param string $url
      * @param array $data
-     * @return Reponse
+     * @return Agent
      */
     public function put($url, $data = [])
     {
+        return $this->request('PUT', $url, $data);
+    }
+
+    private function request($method, $url, $data = [])
+    {
         $environment = Environment::mock(array_merge([
-            'REQUEST_METHOD' => 'PUT',
+            'REQUEST_METHOD' => $method,
             'REQUEST_URI' => $url,
         ], $this->headers));
 
@@ -121,7 +106,7 @@ class Agent
         $headers->set('Content-Type', 'application/json;charset=utf8');
         $body->write(json_encode($data));
 
-        $this->request  = new Request('PUT', $uri, $headers, $cookies, $servers, $body);
+        $this->request  = new Request($method, $uri, $headers, $cookies, $servers, $body);
 
         $app = $this->app;
 
