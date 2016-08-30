@@ -26,7 +26,7 @@ class AgentTest extends TestCase
         $this->target = null;
     }
 
-    public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
+    public function testItShouldReturn404WhenVisitNotExistPageAndCallGetStatusCode()
     {
         // Arrange
         $url = '/not/exist/page';
@@ -39,7 +39,7 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
-    public function testItShouldReturn500WhenVisitWillReturn500AndCallFunctionGetStatusCode()
+    public function testItShouldReturn500WhenVisitWillReturn500AndCallGetStatusCode()
     {
         // Arrange
         $url = '/will/return/500';
@@ -74,7 +74,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodOkWhenVisitWillReturnOkAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodOkWhenVisitWillReturnOkAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/ok';
@@ -99,7 +99,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodOkAndDataStringWhenVisitWillReturnOkByDataAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodOkAndDataStringWhenVisitWillReturnOkByDataAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/ok';
@@ -125,7 +125,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodCookiesAndDataStringWhenVisitWillReturnOkByCookiesAndCallFunctionGetBody($method)
+    public function testItShouldReturnCookiesDataStringWhenVisitWillReturnOkByCookiesAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/cookies';
@@ -148,7 +148,7 @@ class AgentTest extends TestCase
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testItShouldReturnMethodErrorWhenVisitWillReturnErrorAndCallFunctionGetBody($method)
+    public function testItShouldReturnMethodErrorWhenVisitWillReturnErrorAndCallGetBody($method)
     {
         // Arrange
         $url = '/will/return/error';
