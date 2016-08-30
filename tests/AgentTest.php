@@ -51,114 +51,6 @@ class AgentTest extends TestCase
         $this->assertEquals($excepted, $actual);
     }
 
-    public function testItShouldReturnPostOKWhenPostWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'POST OK []';
-
-        // Act
-        $actual = $this->target->post($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnPostOkAndJsonStringWhenPostWithDataWillReturnOkAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $data = [
-            'data' => [1,2,3,4,5],
-        ];
-        $excepted = 'POST OK ' . json_encode($data);
-        //$this->target->haveHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        // Act
-        $actual = $this->target->post($url, $data)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnPutOKWhenPutWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'PUT OK []';
-
-        // Act
-        $actual = $this->target->put($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnPutErrorWhenPutWillReturnErrorAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/error';
-        $excepted = 'PUT ERROR []';
-
-        // Act
-        $actual = $this->target->put($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnPatchOKWhenPatchWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'PATCH OK []';
-
-        // Act
-        $actual = $this->target->patch($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnDeleteOKWhenDeleteWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'DELETE OK []';
-
-        // Act
-        $actual = $this->target->delete($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnHeadOKWhenHeadWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'HEAD OK []';
-
-        // Act
-        $actual = $this->target->head($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
-    public function testItShouldReturnOptionsOKWhenOptionsWillReturnOKAndCallFunctionGetBody()
-    {
-        // Arrange
-        $url = '/will/return/ok';
-        $excepted = 'OPTIONS OK []';
-
-        // Act
-        $actual = $this->target->options($url)->getBody();
-
-        // Assert
-        $this->assertEquals($excepted, $actual);
-    }
-
     public function testItShouldReturn404WhenVisitNotExistPageAndCallFunctionGetStatusCode()
     {
         // Arrange
@@ -180,6 +72,71 @@ class AgentTest extends TestCase
 
         // Act
         $actual = $this->target->get($url)->getStatusCode();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function whenMethodWillReturnOkProvider()
+    {
+        return [
+            ['get', 'GET OK []'],
+            ['post', 'POST OK []'],
+            ['put', 'PUT OK []'],
+            ['delete', 'DELETE OK []'],
+            ['head', 'HEAD OK []'],
+            ['patch', 'PATCH OK []'],
+            ['options', 'OPTIONS OK []'],
+        ];
+    }
+
+    /**
+     * @dataProvider whenMethodWillReturnOkProvider
+     *
+     * @param string $method
+     * @param string $exceptedBody
+     */
+    public function testItShouldReturnMethodOKWhenMethodWillReturnOKAndCallFunctionGetBody($method, $exceptedBody)
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $exceptedStatusCode = 200;
+
+        // Act
+        $actualTarget = $this->target->$method($url);
+        $actualBody = $actualTarget->getBody();
+        $actualStatusCode = $actualTarget->getStatusCode();
+
+        // Assert
+        $this->assertEquals($exceptedStatusCode, $actualStatusCode);
+        $this->assertEquals($exceptedBody, $actualBody);
+    }
+
+    public function testItShouldReturnPostOkAndJsonStringWhenPostWithDataWillReturnOkAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $data = [
+            'data' => [1,2,3,4,5],
+        ];
+        $excepted = 'POST OK ' . json_encode($data);
+        //$this->target->haveHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        // Act
+        $actual = $this->target->post($url, $data)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnPutErrorWhenPutWillReturnErrorAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/error';
+        $excepted = 'PUT ERROR []';
+
+        // Act
+        $actual = $this->target->put($url)->getBody();
 
         // Assert
         $this->assertEquals($excepted, $actual);
