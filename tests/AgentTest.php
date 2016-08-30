@@ -120,6 +120,29 @@ class AgentTest extends TestCase
     }
 
     /**
+     * Test 200 ok response and data string with all method and simple data
+     *
+     * @dataProvider whenVisitWillReturnOkProvider
+     * @param string $method
+     */
+    public function testItShouldReturnMethodCookiesAndDataStringWhenVisitWillReturnOkByCookiesAndCallFunctionGetBody($method)
+    {
+        // Arrange
+        $url = '/will/return/cookies';
+        $cookiesName = 'cookies';
+        $cookiesValue = ['foo', 'bar'];
+        $exceptedBody = strtoupper($method) . ' COOKIES ' . json_encode([$cookiesName => $cookiesValue]);
+
+        // Act
+        $this->target->haveCookies($cookiesName, $cookiesValue);
+        $this->target->$method($url);
+        $actualBody = $this->target->getBody();
+
+        // Assert
+        $this->assertEquals($exceptedBody, $actualBody);
+    }
+
+    /**
      * Test 500 error response with all method
      *
      * @dataProvider whenVisitWillReturnOkProvider

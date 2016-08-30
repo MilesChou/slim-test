@@ -26,6 +26,11 @@ class Agent
     /**
      * @var array
      */
+    private $cookies = [];
+
+    /**
+     * @var array
+     */
     private $headers = [];
 
     /**
@@ -152,7 +157,7 @@ class Agent
         $environment = Environment::mock(array_merge($options, $this->headers));
         $uri = Uri::createFromEnvironment($environment);
         $headers = Headers::createFromEnvironment($environment);
-        $cookies = [];
+        $cookies = $this->cookies;
         $servers = $environment->all();
         $body = new RequestBody();
 
@@ -230,5 +235,16 @@ class Agent
         $header = $this->response->getHeader($name);
 
         return $header;
+    }
+
+    /**
+     * Set cookies
+     *
+     * @param string $name
+     * @param string $value
+     */
+    public function haveCookies($name, $value)
+    {
+        $this->cookies[$name] = $value;
     }
 }
