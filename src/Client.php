@@ -14,9 +14,9 @@ use Slim\Http\Response;
 use Slim\Http\Uri;
 
 /**
- * The agent for slim app
+ * The client for slim app
  */
-class Agent
+class Client
 {
     /**
      * @var \Slim\App

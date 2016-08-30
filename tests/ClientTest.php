@@ -8,17 +8,17 @@ namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-class AgentTest extends TestCase
+class ClientTest extends TestCase
 {
     /**
-     * @var Agent
+     * @var Client
      */
     private $target;
 
     public function setUp()
     {
         $app = require __DIR__ . '/slimapp.php';
-        $this->target = new Agent($app);
+        $this->target = new Client($app);
     }
 
     public function tearDown()
