@@ -12,7 +12,9 @@ use ReflectionException;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
- * The Slim's TestCase named SlimCase
+ * The Slim's TestCase named SlimCase, using Codeception BDD style.
+ *
+ * @see http://codeception.com/docs/modules/REST
  */
 class SlimCase
 {
