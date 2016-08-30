@@ -19,14 +19,28 @@ $app->post('/will/return/ok', function (Request $request, Response $response) {
 
 $app->put('/will/return/ok', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
-    $response->getBody()->write('PUT OK');
+    $response->getBody()->write('PUT OK ' . json_encode($body));
+
+    return $response->withStatus(200);
+});
+
+$app->patch('/will/return/ok', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    $response->getBody()->write('PATCH OK ' . json_encode($body));
+
+    return $response->withStatus(200);
+});
+
+$app->delete('/will/return/ok', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    $response->getBody()->write('DELETE OK ' . json_encode($body));
 
     return $response->withStatus(200);
 });
 
 $app->put('/will/return/error', function (Request $request, Response $response) {
     $body = $request->getParsedBody();
-    $response->getBody()->write('PUT ERROR');
+    $response->getBody()->write('PUT ERROR ' . json_encode($body));
 
     return $response->withStatus(200);
 });

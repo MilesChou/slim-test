@@ -24,11 +24,6 @@ class Agent
     private $app;
 
     /**
-     * @var \Slim\Container
-     */
-    private $container;
-
-    /**
      * @var array
      */
     private $headers = [];
@@ -46,26 +41,18 @@ class Agent
     public function __construct($app)
     {
         $this->app = $app;
-        $this->container = $app->getContainer();
     }
 
     /**
      * Run get HTTP method
      *
      * @param string $url
+     * @param array $data
+     * @return Agent
      */
-    public function get($url)
+    public function get($url, $data = [])
     {
-        $environmentMock = Environment::mock(array_merge([
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => $url,
-        ], $this->headers));
-
-        $this->container['environment'] = $environmentMock;
-
-        $this->response = $this->app->run(true);
-
-        return $this;
+        return $this->request('GET', $url, $data);
     }
 
     /**
@@ -81,6 +68,20 @@ class Agent
     }
 
     /**
+     * Run patch HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function patch($url, $data = [])
+    {
+        return $this->request('PATCH', $url, $data);
+    }
+
+    /**
+     * Run put HTTP method
+     *
      * @param string $url
      * @param array $data
      * @return Agent
@@ -90,7 +91,27 @@ class Agent
         return $this->request('PUT', $url, $data);
     }
 
-    private function request($method, $url, $data = [])
+    /**
+     * Run delete HTTP method
+     *
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function delete($url, $data = [])
+    {
+        return $this->request('DELETE', $url, $data);
+    }
+
+    /**
+     * General request
+     *
+     * @param string $method
+     * @param string $url
+     * @param array $data
+     * @return Agent
+     */
+    public function request($method, $url, $data = [])
     {
         $environment = Environment::mock(array_merge([
             'REQUEST_METHOD' => $method,

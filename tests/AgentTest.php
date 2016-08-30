@@ -85,7 +85,7 @@ class AgentTest extends TestCase
     {
         // Arrange
         $url = '/will/return/ok';
-        $excepted = 'PUT OK';
+        $excepted = 'PUT OK []';
 
         // Act
         $actual = $this->target->put($url)->getBody();
@@ -98,10 +98,36 @@ class AgentTest extends TestCase
     {
         // Arrange
         $url = '/will/return/error';
-        $excepted = 'PUT ERROR';
+        $excepted = 'PUT ERROR []';
 
         // Act
         $actual = $this->target->put($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnPatchOKWhenPatchWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'PATCH OK []';
+
+        // Act
+        $actual = $this->target->patch($url)->getBody();
+
+        // Assert
+        $this->assertEquals($excepted, $actual);
+    }
+
+    public function testItShouldReturnDeleteOKWhenDeleteWillReturnOKAndCallFunctionGetBody()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 'DELETE OK []';
+
+        // Act
+        $actual = $this->target->delete($url)->getBody();
 
         // Assert
         $this->assertEquals($excepted, $actual);
