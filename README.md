@@ -5,18 +5,17 @@
 
 [Slim][] Testing helper.
 
+The repository tests is an example, [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class. You can use `Client` If you want to use PHPUnit style to write test, or use `SlimCase` in Codeception style.
+
 ## Installation with Composer
 
     $ composer require framins/slim-test
 
-## Usage
-
-The repository tests is an example, [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class.
+## Using object to test
 
 First, prepare your Slim App in test code and pass to `SlimCase` constructor.
 
 ```php
-
 use Framins\Slim\Test\SlimCase;
 
 class SlimAppTest extends PHPUnit_Framework_TestCase
@@ -45,7 +44,44 @@ public function testSeeResponseOk()
 }
 ```
 
-`SlimCase` use [Proxy Pattern](https://en.wikipedia.org/wiki/Proxy_pattern) to proxy to `Client` object, That means you can use `Client` method by `SlimCase` object. You can see example in `tests` directory for how to use.
+The visibility of `Client` object in `SlimCase` is public. That means you can use `Client` like
+
+```php
+$slimCase->client->get($url);
+```
+
+> It's unsafe to access Client Object directly. The visibility will modify to `private` in the future.
+
+## Using trait to test
+
+You can use `ClientTrait` or `SlimCaseTrait` to test. Here is an example:
+
+```php
+use Framins\Slim\Test\SlimCaseTrait;
+
+class SlimAppTest extends PHPUnit_Framework_TestCase
+{
+    use SlimCaseTrait;
+
+    public function setUp()
+    {
+        $app = require 'path/to/app.php';
+        $this->setSlimApp($app);
+    }
+
+    public function tearDown()
+    {
+        $this->setSlimApp(null);
+    }
+
+    public function testFooWillBar()
+    {
+        $this->sendGET('Foo');
+        $this->seeResponseContains('Bar');
+    }
+}
+```
+
 
 ## Tests
 
