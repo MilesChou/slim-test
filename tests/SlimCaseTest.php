@@ -74,6 +74,19 @@ class SlimCaseTest extends TestCase
         $this->target->dontSeeResponseCodeIs(200);
     }
 
+    public function testDontSeeResponseContains()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeResponseContains('POST');
+        $this->target->dontSeeResponseContains('ERROR');
+    }
+
     public function testDontSeeResponseOk()
     {
         // Arrange
