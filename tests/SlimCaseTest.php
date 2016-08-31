@@ -40,38 +40,40 @@ class SlimCaseTest extends TestCase
     {
         // Arrange
         $url = '/data/empty';
+        $notExcepted = 'UnknownHeader';
 
         // Act
         $this->target->get($url);
 
         // Assert
-        $this->target->dontSeeHttpHeader('UnknownHeader');
+        $this->target->dontSeeHttpHeader($notExcepted);
     }
 
     public function testDontSeeHttpHeaderValue()
     {
         // Arrange
         $url = '/data/empty';
-        $excepted = 'application/json';
+        $notExcepted = 'application/xml';
 
         // Act
         $this->target->haveHeader('Accept', 'application/json');
         $this->target->get($url);
 
         // Assert
-        $this->target->dontSeeHttpHeader('Content-type', 'application/xml');
+        $this->target->dontSeeHttpHeader('Content-type', $notExcepted);
     }
 
     public function testDontSeeResponseCodeIs()
     {
         // Arrange
         $url = '/will/return/error';
+        $notExcepted = 200;
 
         // Act
         $this->target->get($url);
 
         // Assert
-        $this->target->dontSeeResponseCodeIs(200);
+        $this->target->dontSeeResponseCodeIs($notExcepted);
     }
 
     public function testDontSeeResponseContains()
@@ -103,27 +105,29 @@ class SlimCaseTest extends TestCase
     {
         // Arrange
         $url = '/data/empty';
-        $excepted = 'application/json';
+        $exceptedName = 'Content-type';
+        $exceptedValue = 'application/json';
 
         // Act
         $this->target->haveHeader('Accept', 'application/json');
         $this->target->get($url);
 
         // Assert
-        $this->target->seeHttpHeader('Content-type');
-        $this->target->seeHttpHeader('Content-type', 'application/json');
+        $this->target->seeHttpHeader($exceptedName);
+        $this->target->seeHttpHeader($exceptedName, $exceptedValue);
     }
 
     public function testSeeResponseCodeIs()
     {
         // Arrange
         $url = '/will/return/ok';
+        $excepted = 200;
 
         // Act
         $this->target->get($url);
 
         // Assert
-        $this->target->seeResponseCodeIs(200);
+        $this->target->seeResponseCodeIs($excepted);
     }
 
     public function testSeeResponseContains()
