@@ -8,6 +8,9 @@ namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
+/**
+ * Testing and demostrate how to use SlimCase
+ */
 class SlimCaseTest extends TestCase
 {
     /**
