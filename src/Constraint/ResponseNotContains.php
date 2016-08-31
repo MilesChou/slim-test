@@ -7,7 +7,6 @@
 namespace Framins\Slim\Test\Constraint;
 
 use PHPUnit_Framework_Constraint;
-use PHPUnit_Util_InvalidArgumentHelper;
 
 class ResponseNotContains extends PHPUnit_Framework_Constraint
 {
@@ -17,7 +16,7 @@ class ResponseNotContains extends PHPUnit_Framework_Constraint
     protected $string;
 
     /**
-     * @param int $string HTTP status code
+     * @param string $string
      */
     public function __construct($string)
     {

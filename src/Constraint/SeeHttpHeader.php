@@ -7,7 +7,6 @@
 namespace Framins\Slim\Test\Constraint;
 
 use PHPUnit_Framework_Constraint;
-use PHPUnit_Util_InvalidArgumentHelper;
 
 class SeeHttpHeader extends PHPUnit_Framework_Constraint
 {
