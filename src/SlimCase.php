@@ -10,13 +10,14 @@ use BadMethodCallException;
 use ReflectionClass;
 use ReflectionException;
 use PHPUnit_Framework_Assert as PHPUnit;
+use Framins\Slim\Test\Interfaces\RequestSender;
 
 /**
  * The Slim's TestCase named SlimCase, using Codeception BDD style.
  *
  * @see http://codeception.com/docs/modules/REST
  */
-class SlimCase
+class SlimCase implements RequestSender
 {
     /**
      * @var \Slim\App
@@ -180,5 +181,82 @@ class SlimCase
         $constraint = new Constraint\ResponseIsOk();
 
         PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * Send GET request
+     *
+     * @param string $url
+     * @param array $data This array will transfer to query string
+     */
+    public function sendGET($url, $data = [])
+    {
+        $this->client->request('GET', $url, $data);
+    }
+
+    /**
+     * Send POST request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendPOST($url, $data = [])
+    {
+        $this->client->request('POST', $url, $data);
+    }
+
+    /**
+     * Send PUT request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendPUT($url, $data = [])
+    {
+        $this->client->request('PUT', $url, $data);
+    }
+
+    /**
+     * Send DELETE request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendDELETE($url, $data = [])
+    {
+        $this->client->request('DELETE', $url, $data);
+    }
+
+    /**
+     * Send HEAD request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendHEAD($url, $data = [])
+    {
+        $this->client->request('HEAD', $url, $data);
+    }
+
+    /**
+     * Send PATCH request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendPATCH($url, $data = [])
+    {
+        $this->client->request('PATCH', $url, $data);
+    }
+
+    /**
+     * Send OPTIONS request
+     *
+     * @param string $url
+     * @param array $data
+     */
+    public function sendOPTIONS($url, $data = [])
+    {
+        $this->client->request('OPTIONS', $url, $data);
     }
 }
