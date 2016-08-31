@@ -227,7 +227,7 @@ trait ClientTrait
      * @param string $name
      * @param string $value
      */
-    public function haveCookies($name, $value)
+    public function setCookies($name, $value)
     {
         $this->cookies[$name] = $value;
     }
@@ -238,7 +238,7 @@ trait ClientTrait
      * @param string $name
      * @param string $value
      */
-    public function haveHeader($name, $value)
+    public function setHeader($name, $value)
     {
         $prefix = 'HTTP_';
         $name = $prefix . strtr(strtoupper($name), '-', '_');

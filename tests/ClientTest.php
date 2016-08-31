@@ -134,7 +134,7 @@ class ClientTest extends TestCase
         $exceptedBody = strtoupper($method) . ' COOKIES ' . json_encode([$cookiesName => $cookiesValue]);
 
         // Act
-        $this->target->haveCookies($cookiesName, $cookiesValue);
+        $this->target->setCookies($cookiesName, $cookiesValue);
         $this->target->$method($url);
         $actualBody = $this->target->getBody();
 
@@ -175,7 +175,7 @@ class ClientTest extends TestCase
         $excepted = 'application/json';
 
         // Act
-        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->setHeader('Accept', 'application/json');
         $actual = $this->target->get($url)->getResponesHeader('Content-type')[0];
 
         // Assert
@@ -189,7 +189,7 @@ class ClientTest extends TestCase
         $excepted = 'null';
 
         // Act
-        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->setHeader('Accept', 'application/json');
         $actual = $this->target->get($url)->getBody();
 
         // Assert
@@ -203,7 +203,7 @@ class ClientTest extends TestCase
         $excepted = "<?xml version=\"1.0\"?>\n<root/>\n";
 
         // Act
-        $this->target->haveHeader('Accept', 'application/xml');
+        $this->target->setHeader('Accept', 'application/xml');
         $actual = $this->target->get($url)->getBody();
 
         // Assert
@@ -217,7 +217,7 @@ class ClientTest extends TestCase
         $excepted = 500;
 
         // Act
-        $this->target->haveHeader('Accept', 'application/unknown');
+        $this->target->setHeader('Accept', 'application/unknown');
         $actual = $this->target->get($url)->getStatusCode();
 
         // Assert
