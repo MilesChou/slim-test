@@ -47,24 +47,14 @@ class SlimCase implements RequestSender
     }
 
     /**
-     * Proxy to Client Class
+     * Set http header
      *
      * @param string $name
-     * @param array $args
+     * @param string $value
      */
-    public function __call($name, $args)
+    public function haveHeader($name, $value)
     {
-        try {
-            $method = $this->reflectionClient->getMethod($name);
-            if ($method->isPublic() && !$method->isAbstract()) {
-                return $method->invokeArgs($this->client, $args);
-            } else {
-                // TODO: Patch test if add new private method in Client class
-                throw new BadMethodCallException("Method: '$name' is not public");
-            }
-        } catch (ReflectionException $e) {
-            throw new BadMethodCallException("Method: '$name' is not supported");
-        }
+        $this->client->setHeader($name, $value);
     }
 
     /**
@@ -92,7 +82,7 @@ class SlimCase implements RequestSender
     public function dontSeeResponseCodeIs($excepted, $message = '')
     {
         $excepted = (int) $excepted;
-        $actual = $this->getStatusCode();
+        $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIsNot($excepted);
 
@@ -106,7 +96,7 @@ class SlimCase implements RequestSender
     public function dontSeeResponseContains($excepted, $message = '')
     {
         $excepted = (string) $excepted;
-        $actual = $this->getBody();
+        $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseNotContains($excepted);
 
@@ -118,7 +108,7 @@ class SlimCase implements RequestSender
      */
     public function dontSeeResponseOk($message = '')
     {
-        $actual = $this->getStatusCode();
+        $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseIsNotOk();
 
@@ -150,7 +140,7 @@ class SlimCase implements RequestSender
     public function seeResponseCodeIs($excepted, $message = '')
     {
         $excepted = (int) $excepted;
-        $actual = $this->getStatusCode();
+        $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIs($excepted);
 
@@ -164,7 +154,7 @@ class SlimCase implements RequestSender
     public function seeResponseContains($excepted, $message = '')
     {
         $excepted = (string) $excepted;
-        $actual = $this->getBody();
+        $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseContains($excepted);
 
@@ -176,7 +166,7 @@ class SlimCase implements RequestSender
      */
     public function seeResponseOk($message = '')
     {
-        $actual = $this->getStatusCode();
+        $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseIsOk();
 

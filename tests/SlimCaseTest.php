@@ -26,16 +26,6 @@ class SlimCaseTest extends TestCase
         $this->target = null;
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessageRegExp /undefinedMethod/
-     */
-    public function testUndefinedMethod()
-    {
-        // Act & Assert
-        $this->target->undefinedMethod();
-    }
-
     public function testDontSeeHttpHeaderName()
     {
         // Arrange
@@ -43,7 +33,7 @@ class SlimCaseTest extends TestCase
         $notExcepted = 'UnknownHeader';
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->dontSeeHttpHeader($notExcepted);
@@ -57,7 +47,7 @@ class SlimCaseTest extends TestCase
 
         // Act
         $this->target->haveHeader('Accept', 'application/json');
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->dontSeeHttpHeader('Content-type', $notExcepted);
@@ -70,7 +60,7 @@ class SlimCaseTest extends TestCase
         $notExcepted = 200;
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->dontSeeResponseCodeIs($notExcepted);
@@ -82,7 +72,7 @@ class SlimCaseTest extends TestCase
         $url = '/will/return/ok';
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->dontSeeResponseContains('POST');
@@ -95,7 +85,7 @@ class SlimCaseTest extends TestCase
         $url = '/will/return/error';
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->dontSeeResponseOk();
@@ -110,7 +100,7 @@ class SlimCaseTest extends TestCase
 
         // Act
         $this->target->haveHeader('Accept', 'application/json');
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->seeHttpHeader($exceptedName);
@@ -124,7 +114,7 @@ class SlimCaseTest extends TestCase
         $excepted = 200;
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->seeResponseCodeIs($excepted);
@@ -136,7 +126,7 @@ class SlimCaseTest extends TestCase
         $url = '/will/return/ok';
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->seeResponseContains('GET');
@@ -150,7 +140,7 @@ class SlimCaseTest extends TestCase
         $url = '/will/return/ok';
 
         // Act
-        $this->target->get($url);
+        $this->target->sendGET($url);
 
         // Assert
         $this->target->seeResponseOk();
