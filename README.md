@@ -1,7 +1,7 @@
 # Slim Test
 
 [![Build Status](https://travis-ci.org/Framins/slim-test.svg?branch=master)](https://travis-ci.org/Framins/slim-test)
-[![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg?branch=master)](https://coveralls.io/github/Framins/slim-test?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg)](https://coveralls.io/github/Framins/slim-test)
 
 A [Slim][] helper for test router.
 
@@ -9,7 +9,7 @@ The repository has some example in `tests` folder. [app.php](/app.php) is a defi
 
 ## Installation with Composer
 
-    $ composer require framins/slim-test
+    $ composer require --dev framins/slim-test
 
 ## Using object to test
 
