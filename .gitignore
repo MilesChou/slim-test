@@ -32,3 +32,6 @@ nbproject/*
 /vendor/
 composer.phar
 composer.lock
+
+# Testing logs
+/build/
