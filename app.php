@@ -4,7 +4,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 $container = new Slim\Container();
 
-$app = new Slim\App();
+$app = new Slim\App($container);
 
 $app->any('/will/return/ok', function (Request $request, Response $response) {
     $body = $request->getParsedBody();

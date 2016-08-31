@@ -53,7 +53,7 @@ Execute the test suite use [PHPUnit][]
 
     $ php vendor/bin/phpunit
 
-Run PHP built-in server
+Run PHP built-in server if you want to check HTTP response via browser
 
     $ php -S 0.0.0.0:8080 -t public
 
