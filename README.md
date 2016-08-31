@@ -1,13 +1,13 @@
 # Slim Test
 
 [![Build Status](https://travis-ci.org/Framins/slim-test.svg?branch=master)](https://travis-ci.org/Framins/slim-test)
-[![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg)](https://coveralls.io/github/Framins/slim-test)
+[![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg?branch=master)](https://coveralls.io/github/Framins/slim-test?branch=master)
 
 [Slim][] Testing helper.
 
 ## Installation with Composer
 
-    composer require framins/slim-test
+    $ composer require framins/slim-test
 
 ## Usage
 
@@ -16,6 +16,7 @@ The repository tests is a example, [slimapp.php](/tests/slimapp.php) is a defini
 First, prepare your Slim App in test code and pass to `SlimCase` constructor.
 
 ```php
+
 use Framins\Slim\Test\SlimCase;
 
 class SlimAppTest extends PHPUnit_Framework_TestCase
@@ -44,7 +45,13 @@ public function testSeeResponseOk()
 }
 ```
 
-`SlimCase` use [Proxy Pattern](https://en.wikipedia.org/wiki/Proxy_pattern) to proxy to `Client` object, That means you can use `Client` method by `SlimCase` object. You can see Client example to know how to use.
+`SlimCase` use [Proxy Pattern](https://en.wikipedia.org/wiki/Proxy_pattern) to proxy to `Client` object, That means you can use `Client` method by `SlimCase` object. You can see example in `tests` directory for how to use.
+
+## Tests
+
+Execute the test suite use phpunit command
+
+    $ php vendor/bin/phpunit
 
 ## License
 
