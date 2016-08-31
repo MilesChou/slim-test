@@ -36,6 +36,32 @@ class SlimCaseTest extends TestCase
         $this->target->undefinedMethod();
     }
 
+    public function testDontSeeHttpHeaderName()
+    {
+        // Arrange
+        $url = '/data/empty';
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeHttpHeader('UnknownHeader');
+    }
+
+    public function testDontSeeHttpHeaderValue()
+    {
+        // Arrange
+        $url = '/data/empty';
+        $excepted = 'application/json';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeHttpHeader('Content-type', 'application/xml');
+    }
+
     public function testDontSeeResponseCodeIs()
     {
         // Arrange
