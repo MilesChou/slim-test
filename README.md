@@ -11,7 +11,7 @@
 
 ## Usage
 
-The repository tests is a example, [slimapp.php](/tests/slimapp.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class.
+The repository tests is an example, [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class.
 
 First, prepare your Slim App in test code and pass to `SlimCase` constructor.
 
@@ -23,7 +23,7 @@ class SlimAppTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $app = require __DIR__ . '/slimapp.php';
+        $app = require 'path/to/app.php';
         $this->target = new SlimCase($app);
     }
 }
@@ -49,12 +49,17 @@ public function testSeeResponseOk()
 
 ## Tests
 
-Execute the test suite use phpunit command
+Execute the test suite use [PHPUnit][]
 
     $ php vendor/bin/phpunit
+
+Run PHP built-in server
+
+    $ php -S 0.0.0.0:8080 -t public
 
 ## License
 
 The Slim Test is licensed under the MIT license. See [License File](LICENSE) for more information.
 
+[PHPUnit]: https://phpunit.de/
 [Slim]: http://www.slimframework.com/
