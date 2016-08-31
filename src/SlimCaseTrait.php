@@ -7,10 +7,8 @@
 namespace Framins\Slim\Test;
 
 use BadMethodCallException;
-use ReflectionClass;
-use ReflectionException;
 use PHPUnit_Framework_Assert as PHPUnit;
-use Framins\Slim\Test\Interfaces\RequestSender;
+use Slim\App as SlimApp;
 
 /**
  * The Slim's TestCase named SlimCase, using Codeception BDD style.
@@ -20,7 +18,7 @@ use Framins\Slim\Test\Interfaces\RequestSender;
 trait SlimCaseTrait
 {
     /**
-     * @var \Slim\App
+     * @var SlimApp
      */
     private $app;
 
