@@ -8,21 +8,21 @@ namespace Framins\Slim\Test\Constraint;
 
 use PHPUnit_Framework_Constraint;
 
-class ResponseCodeIs extends PHPUnit_Framework_Constraint
+class ResponseNotContains extends PHPUnit_Framework_Constraint
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $value;
+    protected $string;
 
     /**
-     * @param int $value HTTP status code
+     * @param string $string
      */
-    public function __construct($value)
+    public function __construct($string)
     {
         parent::__construct();
 
-        $this->value = $value;
+        $this->string = $string;
     }
 
     /**
@@ -33,7 +33,7 @@ class ResponseCodeIs extends PHPUnit_Framework_Constraint
      */
     protected function matches($other)
     {
-        return $other === $this->value;
+        return strpos($other, $this->string) === false;
     }
 
     /**
@@ -41,6 +41,6 @@ class ResponseCodeIs extends PHPUnit_Framework_Constraint
      */
     public function toString()
     {
-        return "is equal {$this->value} (HTTP status code)";
+        return "is not contains '{$this->string}' string";
     }
 }

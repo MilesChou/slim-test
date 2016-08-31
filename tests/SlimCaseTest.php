@@ -36,16 +36,57 @@ class SlimCaseTest extends TestCase
         $this->target->undefinedMethod();
     }
 
-    public function testDontSeeResponseCodeIs()
+    public function testDontSeeHttpHeaderName()
     {
         // Arrange
-        $url = '/will/return/error';
+        $url = '/data/empty';
+        $notExcepted = 'UnknownHeader';
 
         // Act
         $this->target->get($url);
 
         // Assert
-        $this->target->dontSeeResponseCodeIs(200);
+        $this->target->dontSeeHttpHeader($notExcepted);
+    }
+
+    public function testDontSeeHttpHeaderValue()
+    {
+        // Arrange
+        $url = '/data/empty';
+        $notExcepted = 'application/xml';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeHttpHeader('Content-type', $notExcepted);
+    }
+
+    public function testDontSeeResponseCodeIs()
+    {
+        // Arrange
+        $url = '/will/return/error';
+        $notExcepted = 200;
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeResponseCodeIs($notExcepted);
+    }
+
+    public function testDontSeeResponseContains()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->dontSeeResponseContains('POST');
+        $this->target->dontSeeResponseContains('ERROR');
     }
 
     public function testDontSeeResponseOk()
@@ -60,7 +101,36 @@ class SlimCaseTest extends TestCase
         $this->target->dontSeeResponseOk();
     }
 
+    public function testSeeHttpHeader()
+    {
+        // Arrange
+        $url = '/data/empty';
+        $exceptedName = 'Content-type';
+        $exceptedValue = 'application/json';
+
+        // Act
+        $this->target->haveHeader('Accept', 'application/json');
+        $this->target->get($url);
+
+        // Assert
+        $this->target->seeHttpHeader($exceptedName);
+        $this->target->seeHttpHeader($exceptedName, $exceptedValue);
+    }
+
     public function testSeeResponseCodeIs()
+    {
+        // Arrange
+        $url = '/will/return/ok';
+        $excepted = 200;
+
+        // Act
+        $this->target->get($url);
+
+        // Assert
+        $this->target->seeResponseCodeIs($excepted);
+    }
+
+    public function testSeeResponseContains()
     {
         // Arrange
         $url = '/will/return/ok';
@@ -69,7 +139,9 @@ class SlimCaseTest extends TestCase
         $this->target->get($url);
 
         // Assert
-        $this->target->seeResponseCodeIs(200);
+        $this->target->seeResponseContains('GET');
+        $this->target->seeResponseContains('OK');
+        $this->target->seeResponseContains('[]');
     }
 
     public function testSeeResponseOk()

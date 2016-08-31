@@ -67,6 +67,24 @@ class SlimCase
     }
 
     /**
+     * @param string $exceptedName
+     * @param null|string $exceptedValue
+     * @param string $message
+     */
+    public function dontSeeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
+    {
+        $exceptedName = (string) $exceptedName;
+        $exceptedValue = $exceptedValue;
+
+        $actualResponse = $this->client->getResponse();
+        $actual = $actualResponse->getHeaders();
+
+        $constraint = new Constraint\DontSeeHttpHeader($exceptedName, $exceptedValue);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
      * @param int $excepted
      * @param string $message
      */
@@ -76,6 +94,20 @@ class SlimCase
         $actual = $this->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIsNot($excepted);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * @param string $excepted
+     * @param string $message
+     */
+    public function dontSeeResponseContains($excepted, $message = '')
+    {
+        $excepted = (string) $excepted;
+        $actual = $this->getBody();
+
+        $constraint = new Constraint\ResponseNotContains($excepted);
 
         PHPUnit::assertThat($actual, $constraint, $message);
     }
@@ -93,6 +125,24 @@ class SlimCase
     }
 
     /**
+     * @param string $exceptedName
+     * @param null|string $exceptedValue
+     * @param string $message
+     */
+    public function seeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
+    {
+        $exceptedName = (string) $exceptedName;
+        $exceptedValue = $exceptedValue;
+
+        $actualResponse = $this->client->getResponse();
+        $actual = $actualResponse->getHeaders();
+
+        $constraint = new Constraint\SeeHttpHeader($exceptedName, $exceptedValue);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
      * @param int $excepted
      * @param string $message
      */
@@ -102,6 +152,20 @@ class SlimCase
         $actual = $this->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIs($excepted);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * @param string $excepted
+     * @param string $message
+     */
+    public function seeResponseContains($excepted, $message = '')
+    {
+        $excepted = (string) $excepted;
+        $actual = $this->getBody();
+
+        $constraint = new Constraint\ResponseContains($excepted);
 
         PHPUnit::assertThat($actual, $constraint, $message);
     }
