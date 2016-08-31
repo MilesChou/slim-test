@@ -11,7 +11,8 @@
     <rule ref="PSR2"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
-    <!-- Paths to check -->
+    <!-- Paths and file to check -->
     <file>src</file>
     <file>tests</file>
+    <file>app.php</file>
 </ruleset>

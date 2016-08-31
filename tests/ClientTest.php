@@ -17,7 +17,7 @@ class ClientTest extends TestCase
 
     public function setUp()
     {
-        $app = require __DIR__ . '/slimapp.php';
+        $app = require __DIR__ . '/../app.php';
         $this->target = new Client($app);
     }
 
