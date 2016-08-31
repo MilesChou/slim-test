@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/Framins/slim-test.svg?branch=master)](https://travis-ci.org/Framins/slim-test)
 [![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg?branch=master)](https://coveralls.io/github/Framins/slim-test?branch=master)
 
-[Slim][] Testing helper.
+A [Slim][] helper for test router.
 
-The repository tests is an example, [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class. You can use `Client` If you want to use PHPUnit style to write test, or use `SlimCase` in Codeception style.
+The repository has some example in `tests` folder. [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class. You can use `Client` If you want to use PHPUnit style to write test, or use `SlimCase` in Codeception style.
 
 ## Installation with Composer
 
@@ -23,7 +23,7 @@ class SlimAppTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $app = require 'path/to/app.php';
-        $this->target = new SlimCase($app);
+        $this->slimCase = new SlimCase($app);
     }
 }
 ```
@@ -37,17 +37,17 @@ public function testSeeResponseOk()
     $url = '/will/return/ok';
 
     // Act
-    $this->target->get($url);
+    $this->slimCase->sendGET($url);
 
     // Assert
-    $this->target->seeResponseOk();
+    $this->slimCase->seeResponseOk();
 }
 ```
 
 The visibility of `Client` object in `SlimCase` is public. That means you can use `Client` like
 
 ```php
-$slimCase->client->get($url);
+$this->slimCase->client->get($url);
 ```
 
 > It's unsafe to access Client Object directly. The visibility will modify to `private` in the future.
