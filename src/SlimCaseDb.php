@@ -7,7 +7,6 @@
 namespace Framins\Slim\Test;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Slim\App as SlimApp;
 
 /**
  * The class Use SlimCase Trait
@@ -16,23 +15,6 @@ use Slim\App as SlimApp;
  */
 class SlimCaseDb
 {
-    public function __construct()
-    {
-        $capsule = new Capsule();
-        $capsule->addConnection([
-            'driver'    => 'mysql',
-            'host'      => '127.0.0.1',
-            'database'  => 'default',
-            'username'  => 'root',
-            'password'  => 'password',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ], 'default');
-
-        $capsule->setAsGlobal();
-    }
-
     /**
      * Fetches a single column value from a database
      *
