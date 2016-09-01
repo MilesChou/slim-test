@@ -12,11 +12,11 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 $capsule = new Capsule();
 $capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => '127.0.0.1',
-    'database'  => 'default',
-    'username'  => 'root',
-    'password'  => 'password',
+    'driver'    => getenv('DB_CONNECTION'),
+    'host'      => getenv('DB_HOST'),
+    'database'  => getenv('DB_DATABASE'),
+    'username'  => getenv('DB_USER'),
+    'password'  => getenv('DB_PASS'),
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
