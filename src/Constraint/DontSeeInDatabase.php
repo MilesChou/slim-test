@@ -12,11 +12,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class DontSeeInDatabase extends PHPUnit_Framework_Constraint
 {
     /**
-     * @var string
-     */
-    protected $name;
-
-    /**
      * @var array
      */
     protected $record;
