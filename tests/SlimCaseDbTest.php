@@ -7,6 +7,7 @@
 namespace Framins\Slim\Test;
 
 use PHPUnit_Framework_TestCase as TestCase;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
  * Testing and demostrate how to use SlimCaseTrait
@@ -22,11 +23,21 @@ class SlimCaseDbTest extends TestCase
     {
         $slimCaseDb = new  SlimCaseDb();
         $this->target = $slimCaseDb;
+
+        // DB Migration
+        Capsule::schema()->create('users', function ($table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email');
+        });
     }
 
     public function tearDown()
     {
         $this->target = null;
+
+        // Clear DB
+        Capsule::schema()->drop('users');
     }
 
     /**
