@@ -17,6 +17,28 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class SlimCaseDb
 {
     /**
+     * Asserts that a row with the given column values exists
+     *
+     * @param string $table
+     * @param array $record
+     */
+    public function dontSeeInDatabase($table, array $record, $message = '')
+    {
+        $select = Capsule::table($table)->select(Capsule::raw('COUNT(*) as num'));
+
+        foreach ($record as $whereColumn => $value) {
+            $select->where($whereColumn, '=', $value);
+        }
+
+        $data = $select->first();
+        $actual = $data->num > 0 ? true : null;
+
+        $constraint = new Constraint\DontSeeInDatabase($record);
+
+        PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
      * Fetches a single column value from a database
      *
      * @param string $table

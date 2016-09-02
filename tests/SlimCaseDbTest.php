@@ -62,11 +62,13 @@ class SlimCaseDbTest extends TestCase
         $this->assertEquals($exceptedEmail, $actualEmail);
     }
 
-    public function testSeeInDatabase()
+    public function testSeeInDatabaseAndDontSeeInDatabase()
     {
         // Arrange
         $exceptedName = 'Miles';
         $exceptedEmail = 'jangconan@gmail.com';
+        $notExceptedName = 'Unknow-Name';
+        $notExceptedEmail = 'Unknow-Email';
         $table = 'users';
         $record = [
             'name' => $exceptedName,
@@ -78,5 +80,7 @@ class SlimCaseDbTest extends TestCase
         // Assert
         $this->target->seeInDatabase($table, ['name' => $exceptedName]);
         $this->target->seeInDatabase($table, ['email' => $exceptedEmail]);
+        $this->target->dontSeeInDatabase($table, ['name' => $notExceptedName]);
+        $this->target->dontSeeInDatabase($table, ['email' => $notExceptedEmail]);
     }
 }
