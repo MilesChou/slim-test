@@ -108,6 +108,24 @@ trait SlimCaseTrait
     }
 
     /**
+     * @param string $excepted
+     * @param string $message
+     */
+    public function dontSeeResponseTitleIs($excepted, $message = '')
+    {
+        $excepted = (string) $excepted;
+        $body = $this->client->getBody();
+
+        $output = [];
+
+        preg_match("/<title>(.*)<\/title>/", $body, $output);
+
+        $actual = isset($output[1]) ? $output[1] : null;
+
+        PHPUnit::assertNotEquals($excepted, $actual, $message);
+    }
+
+    /**
      * @param string $exceptedName
      * @param null|string $exceptedValue
      * @param string $message
@@ -163,6 +181,24 @@ trait SlimCaseTrait
         $constraint = new Constraint\ResponseIsOk();
 
         PHPUnit::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * @param string $excepted
+     * @param string $message
+     */
+    public function seeResponseTitleIs($excepted, $message = '')
+    {
+        $excepted = (string) $excepted;
+        $body = $this->client->getBody();
+
+        $output = [];
+
+        preg_match("/<title>(.*)<\/title>/", $body, $output);
+
+        $actual = isset($output[1]) ? $output[1] : null;
+
+        PHPUnit::assertEquals($excepted, $actual, $message);
     }
 
     /**

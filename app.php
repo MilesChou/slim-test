@@ -74,4 +74,11 @@ $app->any('/data/null', function (Request $request, Response $response) {
     return $newResponse;
 });
 
+$app->any('/title/return/sample', function (Request $request, Response $response) {
+    $body = $request->getParsedBody();
+    $response->getBody()->write('<html><title>sample</title></html>');
+
+    return $response->withStatus(200);
+});
+
 return $app;

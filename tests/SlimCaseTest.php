@@ -173,4 +173,17 @@ class SlimCaseTest extends TestCase
         $this->target->seeResponseContains('OK');
         $this->target->seeResponseContains('[]');
     }
+
+    public function testSeeResponseTitleIsAndDontSeeResponseTitleIs()
+    {
+        // Arrange
+        $url = '/title/return/sample';
+
+        // Act
+        $this->target->sendGET($url);
+
+        // Assert
+        $this->target->seeResponseTitleIs('sample');
+        $this->target->dontSeeResponseTitleIs('unknown');
+    }
 }
