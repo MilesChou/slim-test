@@ -40,11 +40,6 @@ class SlimCaseDbTest extends TestCase
         Capsule::schema()->drop('users');
     }
 
-    /**
-     * Reference from Codeception DB Module
-     *
-     * @see http://codeception.com/docs/modules/Db
-     */
     public function testHaveInDatabaseAndGrabFromDatabase()
     {
         // Arrange
@@ -65,5 +60,23 @@ class SlimCaseDbTest extends TestCase
         // Assert
         $this->assertEquals($exceptedName, $actualName);
         $this->assertEquals($exceptedEmail, $actualEmail);
+    }
+
+    public function testSeeInDatabase()
+    {
+        // Arrange
+        $exceptedName = 'Miles';
+        $exceptedEmail = 'jangconan@gmail.com';
+        $table = 'users';
+        $record = [
+            'name' => $exceptedName,
+            'email' => $exceptedEmail,
+        ];
+
+        $this->target->haveInDatabase($table, $record);
+
+        // Assert
+        $this->target->seeInDatabase($table, ['name' => $exceptedName]);
+        $this->target->seeInDatabase($table, ['email' => $exceptedEmail]);
     }
 }
