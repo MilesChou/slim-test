@@ -1,9 +1,12 @@
 # Slim Test
 
+[![Latest Stable Version](https://poser.pugx.org/framins/slim-test/v/stable)](https://packagist.org/packages/framins/slim-test)
 [![Build Status](https://travis-ci.org/Framins/slim-test.svg?branch=master)](https://travis-ci.org/Framins/slim-test)
 [![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg)](https://coveralls.io/github/Framins/slim-test)
+[![License](https://poser.pugx.org/framins/slim-test/license)](https://packagist.org/packages/framins/slim-test)
 
-A [Slim][] helper for test router.
+
+A test helper for [Slim Framework 3][Slim]
 
 The repository has some example in `tests` folder. [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class. You can use `Client` If you want to use PHPUnit style to write test, or use `SlimCase` in Codeception style.
 
