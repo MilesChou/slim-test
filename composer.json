@@ -1,6 +1,6 @@
 {
     "name": "framins/slim-test",
-    "description": "Slim Testing helper",
+    "description": "A simple test helper for Slim Framework 3",
     "type": "library",
     "keywords": [
         "slim",

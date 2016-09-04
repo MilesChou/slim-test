@@ -6,7 +6,7 @@
 [![License](https://poser.pugx.org/framins/slim-test/license)](https://packagist.org/packages/framins/slim-test)
 
 
-A test helper for [Slim Framework 3][Slim]
+A simple test helper for [Slim Framework 3][Slim]
 
 The repository has some example in `tests` folder. [app.php](/app.php) is a definition use simple Slim router, [SlimCaseTest.php](/tests/SlimCaseTest.php) is testing for `SlimCase` class, and [ClientTest.php](/tests/ClientTest.php) is testing for `Client` class. You can use `Client` If you want to use PHPUnit style to write test, or use `SlimCase` in Codeception style.
 
@@ -14,7 +14,7 @@ The repository has some example in `tests` folder. [app.php](/app.php) is a defi
 
     $ composer require --dev framins/slim-test
 
-## Using object to test
+## Using object in PHPUnit
 
 First, prepare your Slim App in test code and pass to `SlimCase` constructor.
 
@@ -31,7 +31,7 @@ class SlimAppTest extends PHPUnit_Framework_TestCase
 }
 ```
 
-Then, you can use [Codeception Style](http://codeception.com/docs/modules/REST) to make assertion.
+Now, you can use [Codeception Style](http://codeception.com/docs/modules/REST) to make assertion.
 
 ```php
 public function testSeeResponseOk()
@@ -53,11 +53,11 @@ The visibility of `Client` object in `SlimCase` is public. That means you can us
 $this->slimCase->client->get($url);
 ```
 
-> It's unsafe to access Client Object directly. The visibility will modify to `private` in the future.
+> It's unsafe to access client object **directly**. The visibility will modify to `private` in the future.
 
-## Using trait to test
+## Using trait in PHPUnit
 
-You can use `ClientTrait` or `SlimCaseTrait` to test. Here is an example:
+You can use `ClientTrait` or `SlimCaseTrait` in PHPUnit, too. Here is an example:
 
 ```php
 use Framins\Slim\Test\SlimCaseTrait;
@@ -77,20 +77,80 @@ class SlimAppTest extends PHPUnit_Framework_TestCase
         $this->setSlimApp(null);
     }
 
-    public function testFooWillBar()
+    public function testSeeResponseOk()
     {
-        $this->sendGET('Foo');
+        // Arrange
+        $url = '/will/return/ok';
+
+        // Act
+        $this->sendGET($url);
+
+        // Assert
         $this->seeResponseContains('Bar');
     }
 }
 ```
 
+## Using in Behat
+
+It's easy to using Slim Test in [Behat][]. For example, I have a feature file
+
+```feature
+# features/app.feature
+Feature: an example testing use behat
+
+  Scenario: Test assert response is okay
+    Given a route named "/will/return/ok"
+    When visit "/will/return/ok"
+    Then I should see response okay
+```
+
+And implement context file easily
+
+```php
+// features/bootstrap/FeatureContext.php
+use Behat\Behat\Context\Context;
+use Behat\Behat\Context\SnippetAcceptingContext;
+use Framins\Slim\Test\SlimCaseTrait;
+
+class FeatureContext implements Context, SnippetAcceptingContext
+{
+    use SlimCaseTrait;
+
+    public function __construct()
+    {
+        // bootstrap your slim app
+        $app = require __DIR__ . '/../../app.php';
+        $this->setSlimApp($app);
+    }
+
+    /** @Given a route named :url */
+    public function aRouteNamed($url) { /** Do nothing */ }
+
+    /** @When visit :url */
+    public function visit($url)
+    {
+        $this->sendGET($url);
+    }
+
+    /** @Then I should see response okay */
+    public function iShouldSeeResponseOkay()
+    {
+        $this->seeResponseOk();
+    }
+}
+```
 
 ## Tests
 
-Execute the test suite use [PHPUnit][]
+Execute all test suite use [PHPUnit][] and [Behat][]
 
     $ php vendor/bin/phpunit
+    $ php vendor/bin/behat
+
+You can use composer scripts, too
+
+    $ composer test
 
 Run PHP built-in server if you want to check HTTP response via browser
 
@@ -100,5 +160,6 @@ Run PHP built-in server if you want to check HTTP response via browser
 
 The Slim Test is licensed under the MIT license. See [License File](LICENSE) for more information.
 
+[Behat]: http://docs.behat.org/
 [PHPUnit]: https://phpunit.de/
 [Slim]: http://www.slimframework.com/
