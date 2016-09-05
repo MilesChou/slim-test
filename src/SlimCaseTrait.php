@@ -60,8 +60,7 @@ trait SlimCaseTrait
         $exceptedName = (string) $exceptedName;
         $exceptedValue = $exceptedValue;
 
-        $actualResponse = $this->client->getResponse();
-        $actual = $actualResponse->getHeaders();
+        $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\DontSeeHttpHeader($exceptedName, $exceptedValue);
 
@@ -134,8 +133,7 @@ trait SlimCaseTrait
         $exceptedName = (string) $exceptedName;
         $exceptedValue = $exceptedValue;
 
-        $actualResponse = $this->client->getResponse();
-        $actual = $actualResponse->getHeaders();
+        $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\SeeHttpHeader($exceptedName, $exceptedValue);
 

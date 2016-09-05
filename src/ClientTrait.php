@@ -20,9 +20,9 @@ use Slim\Http\Uri;
 trait ClientTrait
 {
     /**
-     * @var SlimApp
+     * @var Support\Agent\AgentInterface
      */
-    private $app;
+    private $agent;
 
     /**
      * @var array
@@ -46,7 +46,7 @@ trait ClientTrait
      */
     public function setSlimApp($app)
     {
-        $this->app = $app;
+        $this->agent = new Support\Agent\Slim3($app);
     }
 
     /**
@@ -143,35 +143,7 @@ trait ClientTrait
      */
     public function request($method, $url, $data = [])
     {
-        $options = [
-            'REQUEST_METHOD' => $method,
-            'REQUEST_URI' => $url,
-        ];
-
-        if ($method === 'GET') {
-            $options['QUERY_STRING'] = http_build_query($data);
-        } else {
-            $params  = json_encode($data);
-        }
-
-        $environment = Environment::mock(array_merge($options, $this->headers));
-        $uri = Uri::createFromEnvironment($environment);
-        $headers = Headers::createFromEnvironment($environment);
-        $cookies = $this->cookies;
-        $servers = $environment->all();
-        $body = new RequestBody();
-
-        if (isset($params)) {
-            $headers->set('Content-Type', 'application/json;charset=utf8');
-            $body->write(json_encode($data));
-        }
-
-        // Build Request
-        $this->request  = new Request($method, $uri, $headers, $cookies, $servers, $body);
-
-        // Build Response via App
-        $app = $this->app;
-        $this->response = $app($this->request, new Response());
+        $this->agent->sendRequest($method, $url, $data);
 
         return $this;
     }
@@ -183,17 +155,7 @@ trait ClientTrait
      */
     public function getBody()
     {
-        return (string) $this->response->getBody();
-    }
-
-    /**
-     * Get Slim response
-     *
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
+        return $this->agent->getBody();
     }
 
     /**
@@ -204,9 +166,18 @@ trait ClientTrait
      */
     public function getResponseHeader($name)
     {
-        $header = $this->response->getHeader($name);
+        return $this->agent->getResponseHeader($name);
+    }
 
-        return $header;
+    /**
+     * Get all http header of response
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getResponseHeaders()
+    {
+        return $this->agent->getResponseHeaders();
     }
 
     /**
@@ -216,9 +187,7 @@ trait ClientTrait
      */
     public function getStatusCode()
     {
-        $statusCode = $this->response->getStatusCode();
-
-        return $statusCode;
+        return $this->agent->getStatusCode();
     }
 
     /**
@@ -229,7 +198,7 @@ trait ClientTrait
      */
     public function setCookies($name, $value)
     {
-        $this->cookies[$name] = $value;
+        $this->agent->setCookies($name, $value);
     }
 
     /**
@@ -240,10 +209,7 @@ trait ClientTrait
      */
     public function setHeader($name, $value)
     {
-        $prefix = 'HTTP_';
-        $name = $prefix . strtr(strtoupper($name), '-', '_');
-
-        $this->headers[$name] = $value;
+        $this->agent->setHeader($name, $value);
     }
 
     /**
