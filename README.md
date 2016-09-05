@@ -86,7 +86,7 @@ class SlimAppTest extends PHPUnit_Framework_TestCase
         $this->sendGET($url);
 
         // Assert
-        $this->seeResponseContains('Bar');
+        $this->seeResponseOk();
     }
 }
 ```
