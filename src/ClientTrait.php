@@ -44,7 +44,7 @@ trait ClientTrait
      *
      * @param SlimApp|null $app
      */
-    public function setSlimApp($app)
+    public function setApp($app)
     {
         $this->agent = new Support\Agent\Slim3($app);
     }
