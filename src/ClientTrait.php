@@ -179,7 +179,7 @@ trait ClientTrait
     /**
      * Return response body
      *
-     * @return int
+     * @return string
      */
     public function getBody()
     {
@@ -202,7 +202,7 @@ trait ClientTrait
      * @param string $name
      * @return array
      */
-    public function getResponesHeader($name)
+    public function getResponseHeader($name)
     {
         $header = $this->response->getHeader($name);
 

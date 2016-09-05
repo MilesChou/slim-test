@@ -179,7 +179,7 @@ class ClientTest extends TestCase
 
         // Act
         $this->target->setHeader('Accept', 'application/json');
-        $actual = $this->target->get($url)->getResponesHeader('Content-type')[0];
+        $actual = $this->target->get($url)->getResponseHeader('Content-type')[0];
 
         // Assert
         $this->assertEquals($excepted, $actual);
