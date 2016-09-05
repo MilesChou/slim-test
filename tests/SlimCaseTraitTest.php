@@ -23,7 +23,6 @@ class SlimCaseTraitTest extends TestCase
 
     public function tearDown()
     {
-        $this->setSlimApp(null);
     }
 
     public function testSeeHttpHeader()

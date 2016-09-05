@@ -22,6 +22,6 @@ class Client
      */
     public function __construct($app)
     {
-        $this->setSlimApp($app);
+        $this->setApp($app);
     }
 }
