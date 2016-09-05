@@ -6,6 +6,7 @@
  */
 namespace Framins\Slim\Test;
 
+use Framins\Slim\Test\Support\Agent\AgentFactory;
 use Slim\App as SlimApp;
 use Slim\Http\Environment;
 use Slim\Http\Headers;
@@ -46,7 +47,8 @@ trait ClientTrait
      */
     public function setApp($app)
     {
-        $this->agent = new Support\Agent\Slim3($app);
+        $factory = new AgentFactory();
+        $this->agent = $factory->getAgent($app);
     }
 
     /**

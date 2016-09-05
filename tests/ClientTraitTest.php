@@ -23,7 +23,6 @@ class ClientTraitTest extends TestCase
 
     public function tearDown()
     {
-        $this->setApp(null);
     }
 
     /**
