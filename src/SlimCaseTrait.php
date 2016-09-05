@@ -7,6 +7,7 @@
 namespace Framins\Slim\Test;
 
 use BadMethodCallException;
+use phpQuery;
 use PHPUnit_Framework_Assert as PHPUnit;
 use Slim\App as SlimApp;
 
@@ -114,13 +115,11 @@ trait SlimCaseTrait
     public function dontSeeResponseTitleIs($excepted, $message = '')
     {
         $excepted = (string) $excepted;
-        $body = $this->client->getBody();
+        $body = (string) $this->client->getBody();
 
         $output = [];
-
-        preg_match("/<title>(.*)<\/title>/", $body, $output);
-
-        $actual = isset($output[1]) ? $output[1] : null;
+        $pq = phpQuery::newDocument($body);
+        $actual = $pq['title']->html();
 
         PHPUnit::assertNotEquals($excepted, $actual, $message);
     }
@@ -190,13 +189,12 @@ trait SlimCaseTrait
     public function seeResponseTitleIs($excepted, $message = '')
     {
         $excepted = (string) $excepted;
-        $body = $this->client->getBody();
+        $body = (string) $this->client->getBody();
 
         $output = [];
-
-        preg_match("/<title>(.*)<\/title>/", $body, $output);
-
-        $actual = isset($output[1]) ? $output[1] : null;
+        $pq = phpQuery::newDocument($body);
+        $actual = $pq['title']->html();
+        $actual = $actual === '' ? null : $actual;
 
         PHPUnit::assertEquals($excepted, $actual, $message);
     }
