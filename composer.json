@@ -2,10 +2,7 @@
     "name": "framins/slim-test",
     "description": "A simple test helper for Slim Framework 3",
     "type": "library",
-    "keywords": [
-        "slim",
-        "testing"
-    ],
+    "keywords": ["slim", "testing"],
     "license": "MIT License",
     "authors": [
         {
@@ -17,12 +14,12 @@
         "php": ">=5.5.9",
         "electrolinux/phpquery": "^0.9.6",
         "illuminate/database": "~5.2.45",
-        "phpunit/phpunit": "^4.0",
+        "phpunit/phpunit": "^4.0 | ^5.5",
         "slim/slim": "^3.4"
     },
     "require-dev": {
         "behat/behat": "^3.1",
-        "satooshi/php-coveralls": "~1.0",
+        "satooshi/php-coveralls": "^1.0",
         "squizlabs/php_codesniffer": "^2.5"
     },
     "autoload": {
