@@ -6,7 +6,7 @@
  */
 namespace Framins\Slim\Test;
 
-use Slim\App as SlimApp;
+use Slim\App;
 
 /**
  * The class Use SlimCase Trait
@@ -20,10 +20,10 @@ class SlimCase
     /**
      * Constructor
      *
-     * @param SlimApp $app
+     * @param App $app
      */
-    public function __construct(SlimApp $app)
+    public function __construct($app)
     {
-        $this->setSlimApp($app);
+        $this->setApp($app);
     }
 }

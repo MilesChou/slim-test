@@ -9,7 +9,7 @@ namespace Framins\Slim\Test;
 use BadMethodCallException;
 use phpQuery;
 use PHPUnit_Framework_Assert as PHPUnit;
-use Slim\App as SlimApp;
+use Slim\App;
 
 /**
  * The Slim's TestCase named SlimCase, using Codeception BDD style.
@@ -19,7 +19,7 @@ use Slim\App as SlimApp;
 trait SlimCaseTrait
 {
     /**
-     * @var SlimApp
+     * @var App
      */
     private $app;
 
@@ -31,9 +31,9 @@ trait SlimCaseTrait
     /**
      * Initailize Client
      *
-     * @param SlimApp|null $app
+     * @param App|null $app
      */
-    public function setSlimApp($app)
+    public function setApp($app)
     {
         $this->app = $app;
         $this->client = new Client($app);

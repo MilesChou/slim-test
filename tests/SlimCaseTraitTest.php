@@ -18,7 +18,7 @@ class SlimCaseTraitTest extends TestCase
     public function setUp()
     {
         $app = require __DIR__ . '/../app.php';
-        $this->setSlimApp($app);
+        $this->setApp($app);
     }
 
     public function tearDown()

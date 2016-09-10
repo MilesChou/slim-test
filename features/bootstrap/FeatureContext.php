@@ -23,7 +23,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $app = require __DIR__ . '/../../app.php';
-        $this->setSlimApp($app);
+        $this->setApp($app);
     }
 
     /**
