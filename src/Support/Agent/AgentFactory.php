@@ -4,7 +4,7 @@
  * @copyright Copyright (c) 2016 Framins
  * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
  */
-namespace Framins\Slim\Test\Support\Agent;
+namespace MilesChou\Slim\Test\Support\Agent;
 
 use InvalidArgumentException;
 

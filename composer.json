@@ -1,9 +1,9 @@
 {
-    "name": "framins/slim-test",
+    "name": "mileschou/slim-test",
     "description": "A simple test helper for Slim Framework 3",
     "type": "library",
     "keywords": ["slim", "testing"],
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "MilesChou",
@@ -13,7 +13,7 @@
     "require": {
         "php": ">=5.5.9",
         "electrolinux/phpquery": "^0.9.6",
-        "illuminate/database": "~5.2.45",
+        "illuminate/database": "^5.2",
         "phpunit/phpunit": "^4.0 | ^5.5",
         "slim/slim": "^3.4"
     },
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Framins\\Slim\\Test\\": "src"
+            "MilesChou\\Slim\\Test\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Framins\\Slim\\Test\\": "tests"
+            "MilesChou\\Slim\\Test\\": "tests"
         }
     },
     "scripts": {

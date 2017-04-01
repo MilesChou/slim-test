@@ -1,9 +1,9 @@
 # Slim Test
 
-[![Latest Stable Version](https://poser.pugx.org/framins/slim-test/v/stable)](https://packagist.org/packages/framins/slim-test)
-[![Build Status](https://travis-ci.org/Framins/slim-test.svg?branch=master)](https://travis-ci.org/Framins/slim-test)
-[![Coverage Status](https://coveralls.io/repos/github/Framins/slim-test/badge.svg)](https://coveralls.io/github/Framins/slim-test)
-[![License](https://poser.pugx.org/framins/slim-test/license)](https://packagist.org/packages/framins/slim-test)
+[![Latest Stable Version](https://poser.pugx.org/mileschou/slim-test/v/stable)](https://packagist.org/packages/mileschou/slim-test)
+[![Build Status](https://travis-ci.org/MilesChou/slim-test.svg?branch=master)](https://travis-ci.org/MilesChou/slim-test)
+[![Coverage Status](https://coveralls.io/repos/github/MilesChou/slim-test/badge.svg)](https://coveralls.io/github/MilesChou/slim-test)
+[![License](https://poser.pugx.org/mileschou/slim-test/license)](https://packagist.org/packages/mileschou/slim-test)
 
 
 A simple test helper for [Slim Framework 3][Slim]
@@ -12,14 +12,14 @@ The repository has some example in `tests` folder. [app.php](/app.php) is a defi
 
 ## Installation with Composer
 
-    $ composer require --dev framins/slim-test
+    $ composer require --dev mileschou/slim-test
 
 ## Using object in PHPUnit
 
 First, prepare your Slim App in test code and pass to `SlimCase` constructor.
 
 ```php
-use Framins\Slim\Test\SlimCase;
+use MilesChou\Slim\Test\SlimCase;
 
 class SlimAppTest extends PHPUnit_Framework_TestCase
 {
@@ -60,7 +60,7 @@ $this->slimCase->client->get($url);
 You can use `ClientTrait` or `SlimCaseTrait` in PHPUnit, too. Here is an example:
 
 ```php
-use Framins\Slim\Test\SlimCaseTrait;
+use MilesChou\Slim\Test\SlimCaseTrait;
 
 class SlimAppTest extends PHPUnit_Framework_TestCase
 {
@@ -111,7 +111,7 @@ And implement context file easily
 // features/bootstrap/FeatureContext.php
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Framins\Slim\Test\SlimCaseTrait;
+use MilesChou\Slim\Test\SlimCaseTrait;
 
 class FeatureContext implements Context, SnippetAcceptingContext
 {
