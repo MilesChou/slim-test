@@ -30,8 +30,8 @@ nbproject/*
 
 # Composer files
 /vendor/
-composer.phar
-composer.lock
+/composer.phar
+/composer.lock
 
 # Testing logs
 /build/
