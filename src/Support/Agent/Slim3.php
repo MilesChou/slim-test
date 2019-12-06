@@ -1,9 +1,5 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test\Support\Agent;
 
 use Slim\App;
@@ -51,7 +47,7 @@ class Slim3 implements AgentInterface
      */
     public function getBody()
     {
-        return (string) $this->response->getBody();
+        return (string)$this->response->getBody();
     }
 
     /**
@@ -109,7 +105,7 @@ class Slim3 implements AgentInterface
         if ($method === 'GET') {
             $options['QUERY_STRING'] = http_build_query($data);
         } else {
-            $params  = json_encode($data);
+            $params = json_encode($data);
         }
 
         $environment = Environment::mock(array_merge($options, $this->headers));
@@ -125,7 +121,7 @@ class Slim3 implements AgentInterface
         }
 
         // Build Request
-        $request  = new Request($method, $uri, $headers, $cookies, $servers, $body);
+        $request = new Request($method, $uri, $headers, $cookies, $servers, $body);
 
         // Build Response via App
         $app = $this->app;

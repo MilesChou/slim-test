@@ -1,14 +1,9 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test;
 
-use BadMethodCallException;
 use phpQuery;
-use PHPUnit_Framework_Assert as PHPUnit;
+use PHPUnit\Framework\Assert;
 use Slim\App;
 
 /**
@@ -57,14 +52,14 @@ trait SlimCaseTrait
      */
     public function dontSeeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
     {
-        $exceptedName = (string) $exceptedName;
+        $exceptedName = (string)$exceptedName;
         $exceptedValue = $exceptedValue;
 
         $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\DontSeeHttpHeader($exceptedName, $exceptedValue);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -73,12 +68,12 @@ trait SlimCaseTrait
      */
     public function dontSeeResponseCodeIs($excepted, $message = '')
     {
-        $excepted = (int) $excepted;
+        $excepted = (int)$excepted;
         $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIsNot($excepted);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -87,12 +82,12 @@ trait SlimCaseTrait
      */
     public function dontSeeResponseContains($excepted, $message = '')
     {
-        $excepted = (string) $excepted;
+        $excepted = (string)$excepted;
         $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseNotContains($excepted);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -104,7 +99,7 @@ trait SlimCaseTrait
 
         $constraint = new Constraint\ResponseIsNotOk();
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -113,14 +108,14 @@ trait SlimCaseTrait
      */
     public function dontSeeResponseTitleIs($excepted, $message = '')
     {
-        $excepted = (string) $excepted;
-        $body = (string) $this->client->getBody();
+        $excepted = (string)$excepted;
+        $body = (string)$this->client->getBody();
 
         $output = [];
         $pq = phpQuery::newDocument($body);
         $actual = $pq['title']->html();
 
-        PHPUnit::assertNotEquals($excepted, $actual, $message);
+        Assert::assertNotEquals($excepted, $actual, $message);
     }
 
     /**
@@ -130,14 +125,14 @@ trait SlimCaseTrait
      */
     public function seeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
     {
-        $exceptedName = (string) $exceptedName;
+        $exceptedName = (string)$exceptedName;
         $exceptedValue = $exceptedValue;
 
         $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\SeeHttpHeader($exceptedName, $exceptedValue);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -146,12 +141,12 @@ trait SlimCaseTrait
      */
     public function seeResponseCodeIs($excepted, $message = '')
     {
-        $excepted = (int) $excepted;
+        $excepted = (int)$excepted;
         $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIs($excepted);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -160,12 +155,12 @@ trait SlimCaseTrait
      */
     public function seeResponseContains($excepted, $message = '')
     {
-        $excepted = (string) $excepted;
+        $excepted = (string)$excepted;
         $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseContains($excepted);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -177,7 +172,7 @@ trait SlimCaseTrait
 
         $constraint = new Constraint\ResponseIsOk();
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -186,15 +181,15 @@ trait SlimCaseTrait
      */
     public function seeResponseTitleIs($excepted, $message = '')
     {
-        $excepted = (string) $excepted;
-        $body = (string) $this->client->getBody();
+        $excepted = (string)$excepted;
+        $body = (string)$this->client->getBody();
 
         $output = [];
         $pq = phpQuery::newDocument($body);
         $actual = $pq['title']->html();
         $actual = $actual === '' ? null : $actual;
 
-        PHPUnit::assertEquals($excepted, $actual, $message);
+        Assert::assertEquals($excepted, $actual, $message);
     }
 
     /**

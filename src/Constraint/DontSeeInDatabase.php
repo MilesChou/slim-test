@@ -1,15 +1,10 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test\Constraint;
 
-use PHPUnit_Framework_Constraint;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use PHPUnit\Framework\Constraint\Constraint;
 
-class DontSeeInDatabase extends PHPUnit_Framework_Constraint
+class DontSeeInDatabase extends Constraint
 {
     /**
      * @var array

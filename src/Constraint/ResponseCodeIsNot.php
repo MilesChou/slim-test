@@ -1,14 +1,10 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test\Constraint;
 
-use PHPUnit_Framework_Constraint;
+use PHPUnit\Framework\Constraint\Constraint;
 
-class ResponseCodeIsNot extends PHPUnit_Framework_Constraint
+class ResponseCodeIsNot extends Constraint
 {
     /**
      * @var int

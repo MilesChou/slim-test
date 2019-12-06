@@ -1,9 +1,5 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test;
 
 use MilesChou\Slim\Test\Support\Agent\AgentFactory;

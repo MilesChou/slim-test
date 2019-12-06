@@ -1,5 +1,5 @@
-sudo: false
-
+os: linux
+dist: trusty
 language: php
 
 php:
@@ -7,25 +7,24 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
-
-before_script:
-  - composer install
-
-script:
-  - mkdir -p build/logs
-  - php vendor/bin/phpcs
-  - if [[ "$TRAVIS_PHP_VERSION" == '7.0' ]]; then php vendor/bin/phpunit --coverage-clover=build/logs/clover.xml ; fi
-  - if [[ "$TRAVIS_PHP_VERSION" != '7.0' ]]; then php vendor/bin/phpunit ; fi
-  - php vendor/bin/behat
-
-after_script:
-  - if [[ "$TRAVIS_PHP_VERSION" == '7.0' ]]; then travis_retry php vendor/bin/coveralls -v ; fi
-
-cache:
-  directories:
-    - vendor
+  - 7.2
+  - 7.3
+  - 7.4
 
 branches:
   only:
     - master
+
+install:
+  - composer install --prefer-dist
+
+script:
+  - make test
+
+after_success:
+  - if [[ "7.3" == "${TRAVIS_PHP_VERSION}" ]]; then bash <(curl -s https://codecov.io/bash) ; fi
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+    - vendor

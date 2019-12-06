@@ -1,9 +1,5 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test\Support\Agent;
 
 use InvalidArgumentException;
@@ -14,7 +10,7 @@ use InvalidArgumentException;
 class AgentFactory
 {
     /**
-     * @return Agent\AgentInterface
+     * @return AgentInterface
      */
     public function getAgent($app)
     {

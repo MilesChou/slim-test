@@ -2,9 +2,8 @@
 
 [![Latest Stable Version](https://poser.pugx.org/mileschou/slim-test/v/stable)](https://packagist.org/packages/mileschou/slim-test)
 [![Build Status](https://travis-ci.org/MilesChou/slim-test.svg?branch=master)](https://travis-ci.org/MilesChou/slim-test)
-[![Coverage Status](https://coveralls.io/repos/github/MilesChou/slim-test/badge.svg)](https://coveralls.io/github/MilesChou/slim-test)
+[![codecov](https://codecov.io/gh/MilesChou/slim-test/branch/master/graph/badge.svg)](https://codecov.io/gh/MilesChou/slim-test)
 [![License](https://poser.pugx.org/mileschou/slim-test/license)](https://packagist.org/packages/mileschou/slim-test)
-
 
 A simple test helper for [Slim Framework 3][Slim]
 

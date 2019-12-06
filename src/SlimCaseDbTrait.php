@@ -1,12 +1,8 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test;
 
-use PHPUnit_Framework_Assert as PHPUnit;
+use PHPUnit\Framework\Assert;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
@@ -35,7 +31,7 @@ trait SlimCaseDbTrait
 
         $constraint = new Constraint\DontSeeInDatabase($record);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 
     /**
@@ -88,6 +84,6 @@ trait SlimCaseDbTrait
 
         $constraint = new Constraint\SeeInDatabase($record);
 
-        PHPUnit::assertThat($actual, $constraint, $message);
+        Assert::assertThat($actual, $constraint, $message);
     }
 }

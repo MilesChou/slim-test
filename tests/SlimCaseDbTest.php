@@ -1,13 +1,9 @@
 <?php
-/**
- * @link      https://github.com/Framins/slim-test
- * @copyright Copyright (c) 2016 Framins
- * @license   https://github.com/Framins/slim-test/blob/master/LICENSE (MIT License)
- */
+
 namespace MilesChou\Slim\Test;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Testing and demostrate how to use SlimCaseTrait
