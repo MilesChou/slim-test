@@ -11,14 +11,14 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": "^7.0",
         "electrolinux/phpquery": "^0.9.6",
         "illuminate/database": "^5.2",
         "slim/slim": "^3.4"
     },
     "require-dev": {
-        "behat/behat": "^3.1",
-        "phpunit/phpunit": "^4 | ^5 | ^6",
+        "behat/behat": "^3.5",
+        "phpunit/phpunit": "^6 | ^7",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {

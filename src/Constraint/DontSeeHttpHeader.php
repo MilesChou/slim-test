@@ -34,7 +34,7 @@ class DontSeeHttpHeader extends Constraint
      * @param mixed $other Value or object to evaluate.
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches($other): bool
     {
         if ($this->value === null) {
             return !isset($other[$this->name]);
@@ -46,7 +46,7 @@ class DontSeeHttpHeader extends Constraint
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         if ($this->value === null) {
             return "doesn't contains '{$this->name}' header name";

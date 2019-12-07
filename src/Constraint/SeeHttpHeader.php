@@ -34,19 +34,19 @@ class SeeHttpHeader extends Constraint
      * @param mixed $other Value or object to evaluate.
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches($other): bool
     {
         if ($this->value === null) {
             return isset($other[$this->name]);
         } else {
-            return isset($other[$this->name]) && in_array($this->value, $other[$this->name]);
+            return isset($other[$this->name]) && in_array($this->value, $other[$this->name], true);
         }
     }
 
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         if ($this->value === null) {
             return "contains '{$this->name}' header name";

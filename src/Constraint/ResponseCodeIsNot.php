@@ -27,7 +27,7 @@ class ResponseCodeIsNot extends Constraint
      * @param mixed $other Value or object to evaluate.
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches($other): bool
     {
         return $other !== $this->value;
     }
@@ -35,7 +35,7 @@ class ResponseCodeIsNot extends Constraint
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return "is not equal {$this->value} (HTTP status code)";
     }

@@ -27,7 +27,7 @@ class SeeInDatabase extends Constraint
      * @param mixed $other Value or object to evaluate.
      * @return boolean
      */
-    protected function matches($other)
+    protected function matches($other): bool
     {
         return $other !== null;
     }
@@ -35,7 +35,7 @@ class SeeInDatabase extends Constraint
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         $str = [];
         foreach ($this->record as $col => $val) {
