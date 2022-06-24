@@ -12,14 +12,15 @@
     ],
     "require": {
         "php": "^7.2 | ^8.0",
-        "electrolinux/phpquery": "^0.9.6",
-        "illuminate/database": "^5.2",
-        "slim/slim": "^3.4"
+        "illuminate/database": "^6 | ^7 | ^8 | ^9",
+        "slim/slim": "^3.4",
+        "symfony/css-selector": "^5 | ^6",
+        "symfony/dom-crawler": "^5 | ^6"
     },
     "require-dev": {
         "ext-json": "*",
-        "behat/behat": "^3.5",
-        "phpunit/phpunit": "^7.5 | ^8 | ^9",
+        "behat/behat": "^3.10",
+        "phpunit/phpunit": "^8.5 | ^9",
         "squizlabs/php_codesniffer": "^3.7"
     },
     "autoload": {

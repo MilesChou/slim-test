@@ -2,9 +2,9 @@
 
 namespace MilesChou\Slim\Test;
 
-use phpQuery;
 use PHPUnit\Framework\Assert;
 use Slim\App;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * The Slim's TestCase named SlimCase, using Codeception BDD style.
@@ -24,11 +24,11 @@ trait SlimCaseTrait
     public $client;
 
     /**
-     * Initailize Client
+     * Initialize Client
      *
-     * @param App|null $app
+     * @param App $app
      */
-    public function setApp($app)
+    public function setApp(App $app)
     {
         $this->app = $app;
         $this->client = new Client($app);
@@ -40,7 +40,7 @@ trait SlimCaseTrait
      * @param string $name
      * @param string $value
      */
-    public function haveHeader($name, $value)
+    public function haveHeader(string $name, string $value)
     {
         $this->client->setHeader($name, $value);
     }
@@ -50,11 +50,8 @@ trait SlimCaseTrait
      * @param null|string $exceptedValue
      * @param string $message
      */
-    public function dontSeeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
+    public function dontSeeHttpHeader(string $exceptedName, ?string $exceptedValue = null, string $message = '')
     {
-        $exceptedName = (string)$exceptedName;
-        $exceptedValue = $exceptedValue;
-
         $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\DontSeeHttpHeader($exceptedName, $exceptedValue);
@@ -66,9 +63,8 @@ trait SlimCaseTrait
      * @param int $excepted
      * @param string $message
      */
-    public function dontSeeResponseCodeIs($excepted, $message = '')
+    public function dontSeeResponseCodeIs(int $excepted, string $message = '')
     {
-        $excepted = (int)$excepted;
         $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIsNot($excepted);
@@ -80,9 +76,8 @@ trait SlimCaseTrait
      * @param string $excepted
      * @param string $message
      */
-    public function dontSeeResponseContains($excepted, $message = '')
+    public function dontSeeResponseContains(string $excepted, string $message = '')
     {
-        $excepted = (string)$excepted;
         $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseNotContains($excepted);
@@ -93,7 +88,7 @@ trait SlimCaseTrait
     /**
      * @param string $message
      */
-    public function dontSeeResponseOk($message = '')
+    public function dontSeeResponseOk(string $message = '')
     {
         $actual = $this->client->getStatusCode();
 
@@ -106,14 +101,13 @@ trait SlimCaseTrait
      * @param string $excepted
      * @param string $message
      */
-    public function dontSeeResponseTitleIs($excepted, $message = '')
+    public function dontSeeResponseTitleIs(string $excepted, string $message = '')
     {
-        $excepted = (string)$excepted;
-        $body = (string)$this->client->getBody();
+        $body = $this->client->getBody();
 
-        $output = [];
-        $pq = phpQuery::newDocument($body);
-        $actual = $pq['title']->html();
+        $crawler = new Crawler($body);
+
+        $actual = $crawler->filter('title')->html();
 
         Assert::assertNotEquals($excepted, $actual, $message);
     }
@@ -123,11 +117,8 @@ trait SlimCaseTrait
      * @param null|string $exceptedValue
      * @param string $message
      */
-    public function seeHttpHeader($exceptedName, $exceptedValue = null, $message = '')
+    public function seeHttpHeader(string $exceptedName, ?string $exceptedValue = null, string $message = '')
     {
-        $exceptedName = (string)$exceptedName;
-        $exceptedValue = $exceptedValue;
-
         $actual = $this->client->getResponseHeaders();
 
         $constraint = new Constraint\SeeHttpHeader($exceptedName, $exceptedValue);
@@ -139,9 +130,8 @@ trait SlimCaseTrait
      * @param int $excepted
      * @param string $message
      */
-    public function seeResponseCodeIs($excepted, $message = '')
+    public function seeResponseCodeIs(int $excepted, string $message = '')
     {
-        $excepted = (int)$excepted;
         $actual = $this->client->getStatusCode();
 
         $constraint = new Constraint\ResponseCodeIs($excepted);
@@ -153,9 +143,8 @@ trait SlimCaseTrait
      * @param string $excepted
      * @param string $message
      */
-    public function seeResponseContains($excepted, $message = '')
+    public function seeResponseContains(string $excepted, string $message = '')
     {
-        $excepted = (string)$excepted;
         $actual = $this->client->getBody();
 
         $constraint = new Constraint\ResponseContains($excepted);
@@ -166,7 +155,7 @@ trait SlimCaseTrait
     /**
      * @param string $message
      */
-    public function seeResponseOk($message = '')
+    public function seeResponseOk(string $message = '')
     {
         $actual = $this->client->getStatusCode();
 
@@ -179,14 +168,13 @@ trait SlimCaseTrait
      * @param string $excepted
      * @param string $message
      */
-    public function seeResponseTitleIs($excepted, $message = '')
+    public function seeResponseTitleIs(string $excepted, string $message = '')
     {
-        $excepted = (string)$excepted;
-        $body = (string)$this->client->getBody();
+        $body = $this->client->getBody();
 
-        $output = [];
-        $pq = phpQuery::newDocument($body);
-        $actual = $pq['title']->html();
+        $crawler = new Crawler($body);
+
+        $actual = $crawler->filter('title')->html();
         $actual = $actual === '' ? null : $actual;
 
         Assert::assertEquals($excepted, $actual, $message);
@@ -198,7 +186,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data This array will transfer to query string
      */
-    public function sendGET($url, $data = [])
+    public function sendGET(string $url, array $data = [])
     {
         $this->client->request('GET', $url, $data);
     }
@@ -209,7 +197,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendPOST($url, $data = [])
+    public function sendPOST(string $url, array $data = [])
     {
         $this->client->request('POST', $url, $data);
     }
@@ -220,7 +208,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendPUT($url, $data = [])
+    public function sendPUT(string $url, array $data = [])
     {
         $this->client->request('PUT', $url, $data);
     }
@@ -231,7 +219,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendDELETE($url, $data = [])
+    public function sendDELETE(string $url, array $data = [])
     {
         $this->client->request('DELETE', $url, $data);
     }
@@ -242,7 +230,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendHEAD($url, $data = [])
+    public function sendHEAD(string $url, array $data = [])
     {
         $this->client->request('HEAD', $url, $data);
     }
@@ -253,7 +241,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendPATCH($url, $data = [])
+    public function sendPATCH(string $url, array $data = [])
     {
         $this->client->request('PATCH', $url, $data);
     }
@@ -264,7 +252,7 @@ trait SlimCaseTrait
      * @param string $url
      * @param array $data
      */
-    public function sendOPTIONS($url, $data = [])
+    public function sendOPTIONS(string $url, array $data = [])
     {
         $this->client->request('OPTIONS', $url, $data);
     }
