@@ -14,10 +14,8 @@ class ResponseCodeIs extends Constraint
     /**
      * @param int $value HTTP status code
      */
-    public function __construct($value)
+    public function __construct(int $value)
     {
-        parent::__construct();
-
         $this->value = $value;
     }
 

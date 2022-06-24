@@ -2,8 +2,10 @@
 
 namespace MilesChou\Slim\Test;
 
+use InvalidArgumentException;
 use MilesChou\Slim\Test\Support\Agent\AgentFactory;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * Testing and demo how to use ClientTrait
@@ -15,22 +17,19 @@ class AgentFactoryTest extends TestCase
      */
     private $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->target = new AgentFactory();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->target = null;
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessageRegExp /stdClass/
-     */
     public function testException()
     {
-        $this->target->getAgent(new \stdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $this->target->getAgent(new stdClass());
     }
 }

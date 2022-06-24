@@ -6,13 +6,13 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use SlimCaseTrait
+ * Testing and demo how to use SlimCaseTrait
  */
 class SlimCaseDbTraitTest extends TestCase
 {
     use SlimCaseDbTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         // DB Migration
         Capsule::schema()->create('users', function ($table) {
@@ -22,7 +22,7 @@ class SlimCaseDbTraitTest extends TestCase
         });
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Clear DB
         Capsule::schema()->drop('users');

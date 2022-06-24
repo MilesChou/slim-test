@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use SlimCaseTrait
+ * Testing and demo how to use SlimCaseTrait
  */
 class SlimCaseDbTest extends TestCase
 {
@@ -15,7 +15,7 @@ class SlimCaseDbTest extends TestCase
      */
     private $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         $slimCaseDb = new SlimCaseDb();
         $this->target = $slimCaseDb;
@@ -28,7 +28,7 @@ class SlimCaseDbTest extends TestCase
         });
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->target = null;
 

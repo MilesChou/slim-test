@@ -5,36 +5,34 @@ namespace MilesChou\Slim\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use ClientTrait
+ * Testing and demo how to use ClientTrait
  */
 class ClientTraitTest extends TestCase
 {
     use ClientTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         $app = require __DIR__ . '/../app.php';
         $this->setApp($app);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
     }
 
     /**
      * Target method definitions
      */
-    public function whenVisitWillReturnOkProvider()
+    public function whenVisitWillReturnOkProvider(): iterable
     {
-        return [
-            ['get'],
-            ['post'],
-            ['put'],
-            ['delete'],
-            ['head'],
-            ['patch'],
-            ['options'],
-        ];
+        yield ['get'];
+        yield ['post'];
+        yield ['put'];
+        yield ['delete'];
+        yield ['head'];
+        yield ['patch'];
+        yield ['options'];
     }
 
     /**

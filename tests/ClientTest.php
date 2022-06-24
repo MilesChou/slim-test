@@ -5,7 +5,7 @@ namespace MilesChou\Slim\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use Client
+ * Testing and demo how to use Client
  */
 class ClientTest extends TestCase
 {
@@ -14,13 +14,13 @@ class ClientTest extends TestCase
      */
     private $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         $app = require __DIR__ . '/../app.php';
         $this->target = new Client($app);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->target = null;
     }
@@ -54,17 +54,15 @@ class ClientTest extends TestCase
     /**
      * Target method definitions
      */
-    public function whenVisitWillReturnOkProvider()
+    public function whenVisitWillReturnOkProvider(): iterable
     {
-        return [
-            ['get'],
-            ['post'],
-            ['put'],
-            ['delete'],
-            ['head'],
-            ['patch'],
-            ['options'],
-        ];
+        yield ['get'];
+        yield ['post'];
+        yield ['put'];
+        yield ['delete'];
+        yield ['head'];
+        yield ['patch'];
+        yield ['options'];
     }
 
     /**

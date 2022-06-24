@@ -5,7 +5,7 @@ namespace MilesChou\Slim\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use SlimCase
+ * Testing and demo how to use SlimCase
  */
 class SlimCaseTest extends TestCase
 {
@@ -14,13 +14,13 @@ class SlimCaseTest extends TestCase
      */
     private $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         $app = require __DIR__ . '/../app.php';
         $this->target = new SlimCase($app);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->target = null;
     }
@@ -28,24 +28,22 @@ class SlimCaseTest extends TestCase
     /**
      * Target method definitions
      */
-    public function whenVisitWillReturnOkProvider()
+    public function whenVisitWillReturnOkProvider(): iterable
     {
-        return [
-            ['get'],
-            ['post'],
-            ['put'],
-            ['delete'],
-            ['head'],
-            ['patch'],
-            ['options'],
-        ];
+        yield ['get'];
+        yield ['post'];
+        yield ['put'];
+        yield ['delete'];
+        yield ['head'];
+        yield ['patch'];
+        yield ['options'];
     }
 
     /**
      * @dataProvider whenVisitWillReturnOkProvider
      * @param string $method
      */
-    public function testSeeResponseOkWithAllSupportMethods($method)
+    public function testSeeResponseOkWithAllSupportMethods(string $method)
     {
         // Arrange
         $url = '/will/return/ok';

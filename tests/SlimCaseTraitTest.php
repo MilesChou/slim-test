@@ -5,19 +5,19 @@ namespace MilesChou\Slim\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testing and demostrate how to use SlimCaseTrait
+ * Testing and demo how to use SlimCaseTrait
  */
 class SlimCaseTraitTest extends TestCase
 {
     use SlimCaseTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         $app = require __DIR__ . '/../app.php';
         $this->setApp($app);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
     }
 

@@ -12,18 +12,16 @@ class SeeHttpHeader extends Constraint
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $value;
 
     /**
      * @param string $name HTTP header name
-     * @param string $value HTTP header value
+     * @param string|null $value HTTP header value
      */
-    public function __construct($name, $value)
+    public function __construct(string $name, ?string $value)
     {
-        parent::__construct();
-
         $this->name = $name;
         $this->value = $value;
     }

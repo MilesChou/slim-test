@@ -35,3 +35,4 @@ nbproject/*
 
 # Testing logs
 /build/
+/.phpunit.result.cache

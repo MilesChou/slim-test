@@ -16,8 +16,6 @@ class DontSeeInDatabase extends Constraint
      */
     public function __construct(array $record)
     {
-        parent::__construct();
-
         $this->record = $record;
     }
 
